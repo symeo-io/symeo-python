@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta:__legacy__"
+
+[tool.pytest.ini_options]
+testpaths = "test"
+
+[tool.black]
+include = '\.pyi?$'
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+
+[tool.coverage.run]
+branch = true
+source_pkgs = ["symeo_python"]
+
+[tool.coverage.report]
+fail_under = 80 # current code coverage
