@@ -14,8 +14,11 @@ jobs:
           name: Install dev requirements
           command: pip install -r requirements-dev.txt
       - run:
-          name: Run test
-          command: python -m pytest
+          name: Run test with coverage
+          command: coverage run -m pytest test
+      - run:
+          name: Display coverage
+          command: coverage report
 
 workflows:
   build_test:

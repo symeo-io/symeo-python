@@ -1,3 +1,4 @@
+import os
 import shutil
 import tempfile
 import unittest
@@ -45,8 +46,11 @@ class YamlToClassConverterTest(unittest.TestCase):
     def __assert_generated_python_file_equals_expected_python_file(
         self, yaml_file_name, python_file_name
     ):
-        given_yaml_file = "resources/given_yaml_files/%s" % yaml_file_name
-        expected_python_file = "resources/expected_python_files/%s" % python_file_name
+        current_absolute_path = os.path.dirname(os.path.abspath(__file__))
+        given_yaml_file = (
+            f"{current_absolute_path}/resources/given_yaml_files/{yaml_file_name}"
+        )
+        expected_python_file = f"{current_absolute_path}/resources/expected_python_files/{python_file_name}"
         target_path = f"{self.__temp_dir}/%s" % python_file_name
         yaml_to_class_converter = YamlToClassConverter(target_path)
 
