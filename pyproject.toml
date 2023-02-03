@@ -3,7 +3,7 @@ requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta:__legacy__"
 
 [tool.pytest.ini_options]
-testpaths = "tests"
+testpaths = "test"
 
 [tool.coverage.run]
 branch = true
