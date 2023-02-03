@@ -15,6 +15,7 @@ repos:
         language: python
         types: [python]
         entry: black
+        exclude: '^tests\/yaml\/resources\/expected_python_files\/'
 
       - id: isort
         name: isort
@@ -27,6 +28,7 @@ repos:
         language: python
         types: [python]
         entry: flake8
+        exclude: E301
 
       - id: mypy
         name: mypy

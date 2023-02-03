@@ -1,0 +1,2 @@
+class Conf:
+    pass

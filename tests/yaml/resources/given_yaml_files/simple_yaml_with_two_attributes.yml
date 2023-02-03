@@ -1,0 +1,4 @@
+database:
+  type: integer
+name:
+  type: string

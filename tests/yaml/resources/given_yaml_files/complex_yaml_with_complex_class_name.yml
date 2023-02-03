@@ -1,0 +1,10 @@
+infrastructure:
+  database:
+    mongo-db:
+      url:
+        type: string
+      port:
+        type: integer
+  github:
+    api:
+      type: string
