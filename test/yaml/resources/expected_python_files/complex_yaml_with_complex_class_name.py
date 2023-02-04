@@ -4,9 +4,14 @@ class Conf:
             class MongoDb:
                 url: str
                 port: int
+
             mongo_db: MongoDb
+
         database: Database
+
         class Github:
             api: str
+
         github: Github
+
     infrastructure: Infrastructure
