@@ -1,0 +1,9 @@
+infrastructure:
+  name: fake
+  database:
+    mongo-db:
+      url: http://localhost
+      port: 5132
+  github:
+    api: http://github.api.com
+application-name: symeo-python

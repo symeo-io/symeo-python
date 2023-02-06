@@ -1,4 +1,6 @@
 infrastructure:
+  name:
+    type: string
   database:
     mongo-db:
       url:
@@ -8,3 +10,5 @@ infrastructure:
   github:
     api:
       type: string
+application-name:
+  type: string

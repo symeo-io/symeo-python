@@ -15,7 +15,6 @@ repos:
         language: python
         types: [python]
         entry: black
-        exclude: '^test\/yaml\/resources\/expected_python_files\/'
 
       - id: isort
         name: isort

@@ -4,6 +4,10 @@ import tempfile
 import unittest
 from hashlib import md5  # type: ignore
 from mmap import ACCESS_READ, mmap  # type: ignore
+from test.yaml.resources.expected_python_files.complex_yaml_with_complex_class_name import \
+    Conf
+
+import yaml  # type: ignore
 
 from symeo_python.yaml.yaml_to_class_converter import YamlToClassConverter
 
@@ -11,6 +15,7 @@ from symeo_python.yaml.yaml_to_class_converter import YamlToClassConverter
 class YamlToClassConverterTest(unittest.TestCase):
 
     __temp_dir: str
+    __current_absolute_path = os.path.dirname(os.path.abspath(__file__))
 
     def setUp(self) -> None:
         self.__temp_dir = tempfile.mkdtemp()
@@ -43,17 +48,29 @@ class YamlToClassConverterTest(unittest.TestCase):
             "complex_yaml_with_complex_class_name.py",
         )
 
+    def test_should_load_complex_yaml_to_class(self):
+        # Given
+        yaml_file_name = "complex_yaml_with_complex_class_name.yml"
+        given_conf_file = f"{self.__current_absolute_path}/resources/given_conf_yaml_files/{yaml_file_name}"
+
+        with open(given_conf_file, "r") as yaml_file:
+            yaml_data = yaml.load(yaml_file, Loader=yaml.FullLoader)
+            conf = Conf(yaml_data)
+            self.assertEqual(conf.application_name, "symeo-python")
+            self.assertEqual(
+                conf.infrastructure.database.mongo_db.url, "http://localhost"
+            )
+            self.assertEqual(conf.infrastructure.database.mongo_db.port, 5132)
+            self.assertEqual(conf.infrastructure.name, "fake")
+            self.assertEqual(conf.infrastructure.github.api, "http://github.api.com")
+
     def __assert_generated_python_file_equals_expected_python_file(
         self, yaml_file_name, python_file_name
     ):
-        current_absolute_path = os.path.dirname(os.path.abspath(__file__))
-        given_yaml_file = (
-            f"{current_absolute_path}/resources/given_yaml_files/{yaml_file_name}"
-        )
-        expected_python_file = f"{current_absolute_path}/resources/expected_python_files/{python_file_name}"
+        given_yaml_file = f"{self.__current_absolute_path}/resources/given_contract_yaml_files/{yaml_file_name}"
         target_path = f"{self.__temp_dir}/%s" % python_file_name
         yaml_to_class_converter = YamlToClassConverter(target_path)
-
+        expected_python_file = f"{self.__current_absolute_path}/resources/expected_python_files/{python_file_name}"
         # When
         yaml_to_class_converter.parse_configuration_from_path(given_yaml_file)
 
