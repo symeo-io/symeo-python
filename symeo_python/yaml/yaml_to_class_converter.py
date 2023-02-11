@@ -3,10 +3,13 @@ from typing import List
 
 import yaml  # type: ignore
 
-from symeo_python.config.conf import Conf
+
+class YamlToClassPort:
+    def parse_configuration_from_path(self, configuration_path):
+        pass
 
 
-class YamlToClassConverter:
+class YamlToClassAdapter(YamlToClassPort):
 
     __target_file_path: str
     __ROOT_CONFIG_CLASS_NAME = "Conf"
@@ -26,13 +29,6 @@ class YamlToClassConverter:
             )
             with open(self.__target_file_path, "w") as file:
                 file.write(class_definition)
-
-    def load_configuration_values_from_yaml_to_class(
-        self, yaml_config_file_path: str
-    ) -> Conf:
-        with open(yaml_config_file_path, "r") as yaml_file:
-            yaml_data = yaml.load(yaml_file, Loader=yaml.FullLoader)
-            return Conf(yaml_data)
 
     def __yaml_data_to_class_with_mapping_methods(
         self, yaml_data: dict, class_name: str, nested_classes: List[str]

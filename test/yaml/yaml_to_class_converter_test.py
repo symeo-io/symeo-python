@@ -2,14 +2,13 @@ import os
 import shutil
 import tempfile
 import unittest
-from hashlib import md5  # type: ignore
-from mmap import ACCESS_READ, mmap  # type: ignore
 from test.yaml.resources.expected_python_files.complex_yaml_with_complex_class_name import \
     Conf
 
 import yaml  # type: ignore
 
-from symeo_python.yaml.yaml_to_class_converter import YamlToClassConverter
+from symeo_python.config.conf_parser import ConfParser
+from symeo_python.yaml.yaml_to_class_converter import YamlToClassAdapter
 
 
 class YamlToClassConverterTest(unittest.TestCase):
@@ -69,18 +68,13 @@ class YamlToClassConverterTest(unittest.TestCase):
     ):
         given_yaml_file = f"{self.__current_absolute_path}/resources/given_contract_yaml_files/{yaml_file_name}"
         target_path = f"{self.__temp_dir}/%s" % python_file_name
-        yaml_to_class_converter = YamlToClassConverter(target_path)
+        yaml_to_class_converter = YamlToClassAdapter(target_path)
         expected_python_file = f"{self.__current_absolute_path}/resources/expected_python_files/{python_file_name}"
         # When
         yaml_to_class_converter.parse_configuration_from_path(given_yaml_file)
 
         # Then
         self.assertEqual(
-            self.__get_file_md5(expected_python_file), self.__get_file_md5(target_path)
+            ConfParser.get_file_md5(expected_python_file),
+            ConfParser.get_file_md5(target_path),
         )
-
-    def __get_file_md5(self, file_path) -> str:
-        with open(file_path) as file, mmap(  # type: ignore
-            file.fileno(), 0, access=ACCESS_READ
-        ) as file:
-            return md5(file).hexdigest()  # type: ignore
