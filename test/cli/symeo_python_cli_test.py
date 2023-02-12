@@ -3,8 +3,7 @@ import unittest
 from typer.testing import CliRunner  # type: ignore
 
 from symeo_python.cli.cli_adapter import CliPort
-from symeo_python.cli.symeo_python_cli import (DEFAULT_CONFIG_FORMAT_PATH,
-                                               SymeoPythonCli)
+from symeo_python.cli.symeo_python_cli import DEFAULT_CONFIG_FORMAT_PATH, SymeoPythonCli
 
 
 class MainTest(unittest.TestCase):
@@ -25,6 +24,15 @@ class MainTest(unittest.TestCase):
             )
         )
         self.assertEqual(0, result.exit_code)
+
+    def test_should_run_cli_start_command(self):
+        # Given
+        cli_adapter_mock = CliAdapterMock()
+        cli = SymeoPythonCli(cli_adapter_mock).load_commands()
+        runner = CliRunner()
+
+        # When
+        result = runner.invoke(cli, "start")
 
 
 class CliAdapterMock(CliPort):

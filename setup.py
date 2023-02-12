@@ -4,7 +4,7 @@ setup(
     name="symeo-python",
     version="1.0.0.rc1",
     packages=find_packages(exclude=["test"]),
-    # install_requires=["google-cloud-logging"],
+    install_requires=["pyyaml", "typer[all]"],
     extra_require={},
     url="https://github.com/symeo-io/symeo-python",
     author="Symeo.io",

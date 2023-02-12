@@ -2,8 +2,9 @@ import os
 import shutil
 import tempfile
 import unittest
-from test.yaml.resources.expected_python_files.complex_yaml_with_complex_class_name import \
-    Conf
+from test.yaml.resources.expected_python_files.complex_yaml_with_complex_class_name import (
+    Conf,
+)
 
 import yaml  # type: ignore
 

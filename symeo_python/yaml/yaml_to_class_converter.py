@@ -28,6 +28,7 @@ class YamlToClassAdapter(YamlToClassPort):
                 yaml_data, self.__ROOT_CONFIG_CLASS_NAME, []
             )
             with open(self.__target_file_path, "w") as file:
+                print(f"Writing conf from contract to {configuration_path}")
                 file.write(class_definition)
 
     def __yaml_data_to_class_with_mapping_methods(
