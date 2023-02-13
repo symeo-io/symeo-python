@@ -67,8 +67,8 @@ class MainTest(unittest.TestCase):
         self.assertEqual(0, result.exit_code)
         self.assertEqual(
             {
-                "config_contract": DEFAULT_CONFIG_FORMAT_PATH,
-                "config_file": DEFAULT_LOCAL_CONFIG_PATH,
+                "config_contract_path": DEFAULT_CONFIG_FORMAT_PATH,
+                "config_values_path": DEFAULT_LOCAL_CONFIG_PATH,
                 "sub_process": fake_sub_process.split(" "),
                 "api_key": fake_api_key,
             },
@@ -84,5 +84,5 @@ class CliAdapterMock(CliPort):
     def generate_configuration_from_contract_file(self, config_contract: str):
         self.config_contract = config_contract
 
-    def load_configuration_values(self, cli_input_data: dict):
+    def prepare_env_and_start_sub_process(self, cli_input_data: dict):
         self.cli_input_data = cli_input_data

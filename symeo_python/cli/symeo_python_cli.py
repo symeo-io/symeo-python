@@ -42,18 +42,22 @@ class SymeoPythonCli:
             config_contract: str = Option(
                 DEFAULT_CONFIG_FORMAT_PATH, "--config-contract", "-c"
             ),
-            config_file: str = Option(DEFAULT_LOCAL_CONFIG_PATH, "--config-file", "-f"),
+            config_values: str = Option(
+                DEFAULT_LOCAL_CONFIG_PATH, "--config-values", "-f"
+            ),
         ):
             print(
-                f"api_key={api_key} config_contract={config_contract} config_file={config_file} sub_command={' '.join(sub_process)}"
+                f"api_key={api_key} config_contract={config_contract} config_values={config_values} sub_command={' '.join(sub_process)}"
             )
+            config_contract_path: Path = Path(os.getcwd()) / config_contract
+            config_values_path: Path = Path(os.getcwd()) / config_values
             cli_input_data = {
-                "config_contract": config_contract,
-                "config_file": config_file,
+                "config_contract_path": str(config_contract_path),
+                "config_values_path": str(config_values_path),
                 "sub_process": sub_process,
             }
             if api_key != "":
                 cli_input_data["api_key"] = api_key
-            self.__cli_port.load_configuration_values(cli_input_data)
+            self.__cli_port.prepare_env_and_start_sub_process(cli_input_data)
 
         return cli

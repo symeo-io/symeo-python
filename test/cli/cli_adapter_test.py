@@ -3,7 +3,6 @@ import unittest
 from symeo_python.cli.cli_adapter import DefaultCliAdapter
 from symeo_python.config.conf_loader import ConfLoaderPort
 from symeo_python.config.conf_parser import ConfParserPort
-from symeo_python.yaml.yaml_to_class_converter import YamlToClassPort
 
 
 class CliAdapterTest(unittest.TestCase):
@@ -19,10 +18,6 @@ class CliAdapterTest(unittest.TestCase):
 
         # Then
         self.assertEqual(contract_path, conf_parser_mock.configuration_path)
-
-
-    def test_should_load_conf_from_local_conf_values_file(self):
-        pass
 
 
 class ConfLoaderAdapterMock(ConfLoaderPort):
