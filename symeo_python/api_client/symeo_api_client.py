@@ -1,4 +1,4 @@
-import requests
+import requests  # type: ignore
 
 SYMEO_API_KEY_HEADER = "X-API-KEY"
 

@@ -2,12 +2,12 @@ import os
 from pathlib import Path
 from typing import List
 
-from typer import Option, Typer, get_app_dir  # type: ignore
+from typer import Option, Typer  # type: ignore
 
 from symeo_python.cli.cli import CliPort
 
-DEFAULT_CONFIG_FORMAT_PATH = "./symeo.config.yml"
-DEFAULT_LOCAL_CONFIG_PATH = "./symeo.local.yml"
+DEFAULT_CONFIG_CONTRACT_PATH = "./symeo.config.yml"
+DEFAULT_CONFIG_VALUES_PATH = "./symeo.local.yml"
 DEFAULT_SYMEO_API_URL = "https://config-staging.symeo.io/api/v1/values"
 
 
@@ -22,12 +22,7 @@ class SymeoPythonCli:
     ) -> Typer:
         cli = Typer()
 
-        @cli.command()
-        def build(
-            config_contract: str = Option(
-                DEFAULT_CONFIG_FORMAT_PATH, "--config-contract", "-c"
-            )
-        ):
+        def generate_config(config_contract):
             config_contract_path: Path = Path(os.getcwd()) / config_contract
             print(
                 f"Starting to generate Config class from configuration contract {config_contract_path}"
@@ -37,14 +32,26 @@ class SymeoPythonCli:
             )
 
         @cli.command()
+        def build(
+            config_contract: str = Option(
+                DEFAULT_CONFIG_CONTRACT_PATH, "--config-contract", "-c"
+            )
+        ):
+            generate_config(config_contract)
+
+        @cli.command()
         def start(
             sub_process: List[str],
             api_key: str = Option("", "--api-key", "-k"),
             api_url: str = Option(DEFAULT_SYMEO_API_URL, "--api-url", "-a"),
             config_values: str = Option(
-                DEFAULT_LOCAL_CONFIG_PATH, "--config-values", "-f"
+                DEFAULT_CONFIG_VALUES_PATH, "--config-values", "-f"
+            ),
+            config_contract: str = Option(
+                DEFAULT_CONFIG_CONTRACT_PATH, "--config-contract", "-c"
             ),
         ):
+            generate_config(config_contract)
             config_values_path: Path = Path(os.getcwd()) / config_values
             cli_input_data = {
                 "config_values_path": str(config_values_path),

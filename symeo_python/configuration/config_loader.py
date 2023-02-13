@@ -1,6 +1,6 @@
 import os
 
-import yaml
+import yaml  # type: ignore
 
 from symeo_python.api_client.symeo_api_client import SymeoApiClientPort
 from symeo_python.configuration.configuration import Config
@@ -19,7 +19,7 @@ class ConfigLoaderAdapter(ConfigLoaderPort):
     def __init__(self, symeo_api_client_port: SymeoApiClientPort):
         self.__symeo_api_client_port = symeo_api_client_port
 
-    __config: Config = None
+    __config: Config
 
     def load_config_from_env(self) -> Config:
         if self.__config is not None:
@@ -30,7 +30,7 @@ class ConfigLoaderAdapter(ConfigLoaderPort):
             return self.__load_yaml_values()
         else:
             raise Exception(
-                f"Failed to load Symeo configuration due to missing api key or local configuration values file"
+                "Failed to load Symeo configuration due to missing api key or local configuration values file"
             )
 
     def __load_yaml_values(self):

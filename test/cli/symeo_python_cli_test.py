@@ -4,12 +4,10 @@ import unittest
 from typer.testing import CliRunner  # type: ignore
 
 from symeo_python.cli.cli import CliPort
-from symeo_python.cli.symeo_python_cli import (
-    DEFAULT_CONFIG_FORMAT_PATH,
-    SymeoPythonCli,
-    DEFAULT_LOCAL_CONFIG_PATH,
-    DEFAULT_SYMEO_API_URL,
-)
+from symeo_python.cli.symeo_python_cli import (DEFAULT_CONFIG_CONTRACT_PATH,
+                                               DEFAULT_CONFIG_VALUES_PATH,
+                                               DEFAULT_SYMEO_API_URL,
+                                               SymeoPythonCli)
 
 
 class MainTest(unittest.TestCase):
@@ -28,7 +26,7 @@ class MainTest(unittest.TestCase):
 
         self.assertTrue(
             cli_adapter_mock.config_contract.endswith(
-                DEFAULT_CONFIG_FORMAT_PATH.replace("./", "")
+                DEFAULT_CONFIG_CONTRACT_PATH.replace("./", "")
             )
         )
         self.assertEqual(0, result.exit_code)
@@ -50,7 +48,7 @@ class MainTest(unittest.TestCase):
         )
         self.assertTrue(
             str(cli_adapter_mock.cli_input_data["config_values_path"]).endswith(
-                DEFAULT_LOCAL_CONFIG_PATH.replace("./", "")
+                DEFAULT_CONFIG_VALUES_PATH.replace("./", "")
             )
         )
 
@@ -74,7 +72,7 @@ class MainTest(unittest.TestCase):
         )
         self.assertTrue(
             str(cli_adapter_mock.cli_input_data["config_values_path"]).endswith(
-                DEFAULT_LOCAL_CONFIG_PATH.replace("./", "")
+                DEFAULT_CONFIG_VALUES_PATH.replace("./", "")
             )
         )
         self.assertEqual(cli_adapter_mock.cli_input_data["api_key"], fake_api_key)
@@ -104,11 +102,16 @@ class MainTest(unittest.TestCase):
         )
         self.assertTrue(
             str(cli_adapter_mock.cli_input_data["config_values_path"]).endswith(
-                DEFAULT_LOCAL_CONFIG_PATH.replace("./", "")
+                DEFAULT_CONFIG_VALUES_PATH.replace("./", "")
             )
         )
         self.assertEqual(cli_adapter_mock.cli_input_data["api_key"], fake_api_key)
         self.assertEqual(cli_adapter_mock.cli_input_data["api_url"], fake_api_url)
+        self.assertTrue(
+            cli_adapter_mock.config_contract.endswith(
+                DEFAULT_CONFIG_CONTRACT_PATH.replace("./", "")
+            )
+        )
 
 
 class CliAdapterMock(CliPort):
