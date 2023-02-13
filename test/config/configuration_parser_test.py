@@ -2,7 +2,7 @@ import os
 import unittest
 
 from symeo_python.config.conf_parser import ConfParserAdapter
-from symeo_python.yaml.yaml_to_class_converter import YamlToClassAdapter
+from symeo_python.yaml_converter.yaml_to_class_converter import YamlToClassAdapter
 
 
 class ConfigurationParserTest(unittest.TestCase):

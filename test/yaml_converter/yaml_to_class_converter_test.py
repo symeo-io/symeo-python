@@ -5,14 +5,14 @@ import unittest
 
 import yaml
 
-from test.yaml.resources.expected_python_files.complex_yaml_with_complex_class_name import (
+from test.yaml_converter.resources.expected_python_files.complex_yaml_with_complex_class_name import (
     Conf,
 )
 
 # import yaml  # type: ignore
 
 from symeo_python.config.conf_parser import ConfParserAdapter
-from symeo_python.yaml.yaml_to_class_converter import YamlToClassAdapter
+from symeo_python.yaml_converter.yaml_to_class_converter import YamlToClassAdapter
 
 
 class YamlToClassConverterTest(unittest.TestCase):

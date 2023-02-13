@@ -2,7 +2,7 @@ import os
 from hashlib import md5  # type: ignore
 from mmap import ACCESS_READ, mmap  # type: ignore
 
-from symeo_python.yaml.yaml_to_class_converter import YamlToClassPort
+from symeo_python.yaml_converter.yaml_to_class_converter import YamlToClassPort
 
 
 class ConfParserPort:
