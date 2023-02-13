@@ -2,10 +2,11 @@ import os
 
 import yaml
 
-from symeo_python.configuration.configuration import Config
 from symeo_python.api_client.symeo_api_client import SymeoApiClientPort
+from symeo_python.configuration.configuration import Config
 
 SYMEO_API_KEY = "SYMEO_API_KEY"
+SYMEO_API_URL = "SYMEO_API_URL"
 SYMEO_LOCAL_FILE = "SYMEO_LOCAL_FILE"
 
 
@@ -23,7 +24,7 @@ class ConfigLoaderAdapter(ConfigLoaderPort):
     def load_config_from_env(self) -> Config:
         if self.__config is not None:
             return self.__config
-        if SYMEO_API_KEY in os.environ:
+        if SYMEO_API_KEY in os.environ and SYMEO_API_URL in os.environ:
             return self.__fetch_configuration_values_from_symeo_api()
         elif SYMEO_LOCAL_FILE in os.environ:
             return self.__load_yaml_values()
@@ -41,7 +42,7 @@ class ConfigLoaderAdapter(ConfigLoaderPort):
 
     def __fetch_configuration_values_from_symeo_api(self):
         yaml_data = self.__symeo_api_client_port.get_conf_values_for_api_key(
-            os.getenv(SYMEO_API_KEY)
+            os.getenv(SYMEO_API_URL), os.getenv(SYMEO_API_KEY)
         )
         config = Config(yaml_data)
         self.__config = config

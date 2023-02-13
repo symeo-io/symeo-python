@@ -8,6 +8,7 @@ from symeo_python.cli.symeo_python_cli import (
     DEFAULT_CONFIG_FORMAT_PATH,
     SymeoPythonCli,
     DEFAULT_LOCAL_CONFIG_PATH,
+    DEFAULT_SYMEO_API_URL,
 )
 
 
@@ -52,11 +53,6 @@ class MainTest(unittest.TestCase):
                 DEFAULT_LOCAL_CONFIG_PATH.replace("./", "")
             )
         )
-        self.assertTrue(
-            str(cli_adapter_mock.cli_input_data["config_contract_path"]).endswith(
-                DEFAULT_CONFIG_FORMAT_PATH.replace("./", "")
-            )
-        )
 
     def test_should_run_cli_start_command_in_saas_mode(self):
         # Given
@@ -81,12 +77,38 @@ class MainTest(unittest.TestCase):
                 DEFAULT_LOCAL_CONFIG_PATH.replace("./", "")
             )
         )
+        self.assertEqual(cli_adapter_mock.cli_input_data["api_key"], fake_api_key)
+        self.assertEqual(
+            cli_adapter_mock.cli_input_data["api_url"], DEFAULT_SYMEO_API_URL
+        )
+
+    def test_should_run_cli_start_command_in_saas_mode_given_an_api_url(self):
+        # Given
+        cli_adapter_mock = CliAdapterMock()
+        cli = SymeoPythonCli(cli_adapter_mock).load_commands()
+        runner = CliRunner()
+        fake_sub_process = "fake sub_process"
+        fake_api_key = "API_111_222"
+        fake_api_url = "http://fake-url.io"
+
+        # When
+        result = runner.invoke(
+            cli,
+            "start -k %s -a %s -- %s" % (fake_api_key, fake_api_url, fake_sub_process),
+        )
+
+        # Then
+        self.assertEqual(0, result.exit_code)
+        self.assertEqual(
+            fake_sub_process.split(" "), cli_adapter_mock.cli_input_data["sub_process"]
+        )
         self.assertTrue(
-            str(cli_adapter_mock.cli_input_data["config_contract_path"]).endswith(
-                DEFAULT_CONFIG_FORMAT_PATH.replace("./", "")
+            str(cli_adapter_mock.cli_input_data["config_values_path"]).endswith(
+                DEFAULT_LOCAL_CONFIG_PATH.replace("./", "")
             )
         )
         self.assertEqual(cli_adapter_mock.cli_input_data["api_key"], fake_api_key)
+        self.assertEqual(cli_adapter_mock.cli_input_data["api_url"], fake_api_url)
 
 
 class CliAdapterMock(CliPort):

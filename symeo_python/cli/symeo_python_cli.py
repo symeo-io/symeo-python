@@ -8,6 +8,7 @@ from symeo_python.cli.cli import CliPort
 
 DEFAULT_CONFIG_FORMAT_PATH = "./symeo.config.yml"
 DEFAULT_LOCAL_CONFIG_PATH = "./symeo.local.yml"
+DEFAULT_SYMEO_API_URL = "https://config-staging.symeo.io/api/v1/values"
 
 
 class SymeoPythonCli:
@@ -39,25 +40,19 @@ class SymeoPythonCli:
         def start(
             sub_process: List[str],
             api_key: str = Option("", "--api-key", "-k"),
-            config_contract: str = Option(
-                DEFAULT_CONFIG_FORMAT_PATH, "--config-contract", "-c"
-            ),
+            api_url: str = Option(DEFAULT_SYMEO_API_URL, "--api-url", "-a"),
             config_values: str = Option(
                 DEFAULT_LOCAL_CONFIG_PATH, "--config-values", "-f"
             ),
         ):
-            print(
-                f"api_key={api_key} config_contract={config_contract} config_values={config_values} sub_command={' '.join(sub_process)}"
-            )
-            config_contract_path: Path = Path(os.getcwd()) / config_contract
             config_values_path: Path = Path(os.getcwd()) / config_values
             cli_input_data = {
-                "config_contract_path": str(config_contract_path),
                 "config_values_path": str(config_values_path),
                 "sub_process": sub_process,
             }
             if api_key != "":
                 cli_input_data["api_key"] = api_key
+                cli_input_data["api_url"] = api_url
             self.__cli_port.prepare_env_and_start_sub_process(cli_input_data)
 
         return cli

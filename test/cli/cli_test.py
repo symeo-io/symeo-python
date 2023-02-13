@@ -29,8 +29,13 @@ class CliTest(unittest.TestCase):
         process_runner_adapter_mock = ProcessRunnerAdapterMock()
         cli_adapter = DefaultCliAdapter(conf_parser_mock, process_runner_adapter_mock)
         api_key = "FAKE_API_KEY_111"
+        api_url = "http://fake.111"
         sub_process = ["echo", "'Test1'"]
-        cli_input_data = {"api_key": api_key, "sub_process": sub_process}
+        cli_input_data = {
+            "api_key": api_key,
+            "api_url": api_url,
+            "sub_process": sub_process,
+        }
 
         # When
         cli_adapter.prepare_env_and_start_sub_process(cli_input_data)
@@ -45,9 +50,11 @@ class CliTest(unittest.TestCase):
         process_runner_adapter_mock = ProcessRunnerAdapterMock()
         cli_adapter = DefaultCliAdapter(conf_parser_mock, process_runner_adapter_mock)
         config_values_path = "./fake_local_file_111.yml"
+        api_url = "http://fake.111"
         sub_process = ["echo", "'Test2'"]
         cli_input_data = {
             "config_values_path": config_values_path,
+            "api_url": api_url,
             "sub_process": sub_process,
         }
 
@@ -76,7 +83,9 @@ class CliTest(unittest.TestCase):
             exception = e
 
         # Then
-        self.assertEqual(str(exception), "Missing api_key or config_values_path")
+        self.assertEqual(
+            str(exception), "Missing api_key/api_url or config_values_path"
+        )
 
 
 class ProcessRunnerAdapterMock(ProcessRunnerPort):
