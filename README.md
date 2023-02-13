@@ -8,7 +8,7 @@ The Symeo SDK made for interacting with your Symeo secrets and configuration fro
 
 Add `symeo-python` to your `requirements.txt`
 
-Ex : 
+Ex :
 ```t
 symeo-python==0.0.1
 ```
@@ -22,7 +22,7 @@ Or run directly `pip install symeo-python`
 
 Add `symeo-python` to your `Pipfile`
 
-Ex : 
+Ex :
 ```
 [packages]
 symeo-python = "0.0.1"
@@ -40,7 +40,6 @@ Create a `symeo.config.yml` file in the root of your project, and define the str
 aws:
   region:
     type: string
-    optional: true
   database:
     host:
       type: string
@@ -50,7 +49,6 @@ aws:
       type: string
     password:
       type: string
-      secret: true
 ```
 
 - You can nest properties to any depth level
@@ -119,3 +117,11 @@ $ symeo-python start -k $YOUR_ENVIRONMENT_API_KEY -- uvicorn main:app
 So the sdk fetch the values for the given environment and starts your application with those values.
 
 Follow the [Symeo platform documentation](https://symeo.io/) for more details.
+
+# Help
+
+To get some help with the CLI, please use the following commands :
+
+`symeo-python build --help`
+or
+`symeo-python start --help`

@@ -2,7 +2,7 @@ from setuptools import find_packages, setup  # type: ignore
 
 setup(
     name="symeo-python",
-    version="1.0.0.rc1",
+    version="0.0.1",
     packages=find_packages(exclude=["test"]),
     install_requires=["pyyaml", "typer[all]", "requests"],
     extra_require={},
