@@ -8,7 +8,7 @@ from test.yaml.resources.expected_python_files.complex_yaml_with_complex_class_n
 
 import yaml  # type: ignore
 
-from symeo_python.config.conf_parser import ConfParser
+from symeo_python.config.conf_parser import ConfParserAdapter
 from symeo_python.yaml.yaml_to_class_converter import YamlToClassAdapter
 
 
@@ -76,6 +76,6 @@ class YamlToClassConverterTest(unittest.TestCase):
 
         # Then
         self.assertEqual(
-            ConfParser.get_file_md5(expected_python_file),
-            ConfParser.get_file_md5(target_path),
+            ConfParserAdapter.get_file_md5(expected_python_file),
+            ConfParserAdapter.get_file_md5(target_path),
         )

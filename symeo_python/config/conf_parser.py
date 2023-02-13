@@ -2,24 +2,28 @@ import os
 from hashlib import md5  # type: ignore
 from mmap import ACCESS_READ, mmap  # type: ignore
 
-from symeo_python.config.conf import Conf
-from symeo_python.yaml.yaml_to_class_converter import YamlToClassAdapter
+from symeo_python.yaml.yaml_to_class_converter import YamlToClassPort
 
 
-class ConfParser:
+class ConfParserPort:
+    def generate_configuration(self, configuration_path: str) -> None:
+        pass
+
+
+class ConfParserAdapter(ConfParserPort):
 
     __SUPPORTED_EXTENSIONS__ = [".yml", ".yaml"]
-    __yaml_to_class_converter: YamlToClassAdapter
+    __yaml_to_class_port: YamlToClassPort
 
-    def __init__(self, yaml_to_class_converter: YamlToClassAdapter):
-        self.__yaml_to_class_converter = yaml_to_class_converter
+    def __init__(self, yaml_to_class_port: YamlToClassPort):
+        self.__yaml_to_class_port = yaml_to_class_port
 
-    def load_configuration(self, configuration_path: str) -> Conf:
+    def generate_configuration(self, configuration_path: str):
         if os.path.isfile(configuration_path) is False:
             raise Exception(f"Configuration file {configuration_path} not found")
         else:
             if self.__validate_file_extension(configuration_path):
-                return self.__yaml_to_class_converter.parse_configuration_from_path(
+                self.__yaml_to_class_port.parse_configuration_from_path(
                     configuration_path
                 )
             else:
