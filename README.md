@@ -10,7 +10,7 @@ Add `symeo-python` to your `requirements.txt`
 
 Ex : 
 ```t
-symeo-python==1.0.0.rc1
+symeo-python==0.0.1
 ```
 
 Run `pip install -r requirements.txt`
@@ -25,7 +25,7 @@ Add `symeo-python` to your `Pipfile`
 Ex : 
 ```
 [packages]
-symeo-python = "1.0.0.rc1"
+symeo-python = "0.0.1"
 ```
 
 Run `pipenv install`

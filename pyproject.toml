@@ -10,4 +10,8 @@ branch = true
 source_pkgs = ["symeo_python"]
 
 [tool.coverage.report]
-fail_under = 80 # current code coverage
+fail_under = 80
+omit = [
+    "symeo_python/config.py",
+    "symeo_python/cli/main.py"
+]

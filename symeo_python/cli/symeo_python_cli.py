@@ -4,7 +4,7 @@ from typing import List
 
 from typer import Option, Typer, get_app_dir  # type: ignore
 
-from symeo_python.cli.cli_adapter import CliPort
+from symeo_python.cli.cli import CliPort
 
 DEFAULT_CONFIG_FORMAT_PATH = "./symeo.config.yml"
 DEFAULT_LOCAL_CONFIG_PATH = "./symeo.local.yml"
