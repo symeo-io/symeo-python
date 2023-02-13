@@ -2,7 +2,7 @@ import os
 
 import yaml
 
-from symeo_python.config.config import Config
+from symeo_python.configuration.configuration import Config
 from symeo_python.api_client.symeo_api_client import SymeoApiClientPort
 
 SYMEO_API_KEY = "SYMEO_API_KEY"

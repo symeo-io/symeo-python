@@ -11,7 +11,7 @@ from test.yaml_converter.resources.expected_python_files.complex_yaml_with_compl
 
 # import yaml  # type: ignore
 
-from symeo_python.config.config_parser import ConfigParserAdapter
+from symeo_python.configuration.config_parser import ConfigParserAdapter
 from symeo_python.yaml_converter.yaml_to_class_converter import YamlToClassAdapter
 
 

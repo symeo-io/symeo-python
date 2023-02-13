@@ -17,7 +17,7 @@ class YamlToClassAdapter(YamlToClassPort):
 
     def __init__(
         self,
-        target_file_path: str = f"{os.path.dirname(os.path.abspath(__file__))}/../config/config.py",
+        target_file_path: str = f"{os.path.dirname(os.path.abspath(__file__))}/../configuration/configuration.py",
     ):
         self.__target_file_path = target_file_path
 
