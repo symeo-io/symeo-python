@@ -6,12 +6,12 @@ import unittest
 import yaml
 
 from test.yaml_converter.resources.expected_python_files.complex_yaml_with_complex_class_name import (
-    Conf,
+    Config,
 )
 
 # import yaml  # type: ignore
 
-from symeo_python.config.conf_parser import ConfParserAdapter
+from symeo_python.config.config_parser import ConfigParserAdapter
 from symeo_python.yaml_converter.yaml_to_class_converter import YamlToClassAdapter
 
 
@@ -58,14 +58,14 @@ class YamlToClassConverterTest(unittest.TestCase):
 
         with open(given_conf_file, "r") as yaml_file:
             yaml_data = yaml.load(yaml_file, Loader=yaml.FullLoader)
-            conf = Conf(yaml_data)
-            self.assertEqual(conf.application_name, "symeo-python")
+            config = Config(yaml_data)
+            self.assertEqual(config.application_name, "symeo-python")
             self.assertEqual(
-                conf.infrastructure.database.mongo_db.url, "http://localhost"
+                config.infrastructure.database.mongo_db.url, "http://localhost"
             )
-            self.assertEqual(conf.infrastructure.database.mongo_db.port, 5132)
-            self.assertEqual(conf.infrastructure.name, "fake")
-            self.assertEqual(conf.infrastructure.github.api, "http://github.api.com")
+            self.assertEqual(config.infrastructure.database.mongo_db.port, 5132)
+            self.assertEqual(config.infrastructure.name, "fake")
+            self.assertEqual(config.infrastructure.github.api, "http://github.api.com")
 
     def __assert_generated_python_file_equals_expected_python_file(
         self, yaml_file_name, python_file_name
@@ -79,6 +79,6 @@ class YamlToClassConverterTest(unittest.TestCase):
 
         # Then
         self.assertEqual(
-            ConfParserAdapter.get_file_md5(expected_python_file),
-            ConfParserAdapter.get_file_md5(target_path),
+            ConfigParserAdapter.get_file_md5(expected_python_file),
+            ConfigParserAdapter.get_file_md5(target_path),
         )

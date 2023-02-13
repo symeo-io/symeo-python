@@ -4,14 +4,14 @@ from typing import List
 
 from symeo_python.cli.cli import DefaultCliAdapter
 from symeo_python.cli.process_runner import ProcessRunnerPort
-from symeo_python.config.conf_loader import SYMEO_LOCAL_FILE, SYMEO_API_KEY
-from symeo_python.config.conf_parser import ConfParserPort
+from symeo_python.config.config_loader import SYMEO_LOCAL_FILE, SYMEO_API_KEY
+from symeo_python.config.config_parser import ConfigParserPort
 
 
 class CliTest(unittest.TestCase):
     def test_should_parse_conf_from_yaml(self):
         # Given
-        conf_parser_mock = ConfParserAdapterMock()
+        conf_parser_mock = ConfigParserAdapterMock()
         process_runner_adapter_mock = ProcessRunnerAdapterMock()
         cli_adapter = DefaultCliAdapter(conf_parser_mock, process_runner_adapter_mock)
         contract_path = "fake/config/contract/path"
@@ -25,7 +25,7 @@ class CliTest(unittest.TestCase):
 
     def test_should_prepare_env_with_api_key_and_run_sub_process(self):
         # Given
-        conf_parser_mock = ConfParserAdapterMock()
+        conf_parser_mock = ConfigParserAdapterMock()
         process_runner_adapter_mock = ProcessRunnerAdapterMock()
         cli_adapter = DefaultCliAdapter(conf_parser_mock, process_runner_adapter_mock)
         api_key = "FAKE_API_KEY_111"
@@ -41,7 +41,7 @@ class CliTest(unittest.TestCase):
 
     def test_should_prepare_env_with_local_file_and_run_sub_process(self):
         # Given
-        conf_parser_mock = ConfParserAdapterMock()
+        conf_parser_mock = ConfigParserAdapterMock()
         process_runner_adapter_mock = ProcessRunnerAdapterMock()
         cli_adapter = DefaultCliAdapter(conf_parser_mock, process_runner_adapter_mock)
         config_values_path = "./fake_local_file_111.yml"
@@ -60,7 +60,7 @@ class CliTest(unittest.TestCase):
 
     def test_should_raise_exception_for_missing_cli_input_data(self):
         # Given
-        conf_parser_mock = ConfParserAdapterMock()
+        conf_parser_mock = ConfigParserAdapterMock()
         process_runner_adapter_mock = ProcessRunnerAdapterMock()
         cli_adapter = DefaultCliAdapter(conf_parser_mock, process_runner_adapter_mock)
         sub_process = ["echo", "'Test2'"]
@@ -87,7 +87,7 @@ class ProcessRunnerAdapterMock(ProcessRunnerPort):
         self.process = process
 
 
-class ConfParserAdapterMock(ConfParserPort):
+class ConfigParserAdapterMock(ConfigParserPort):
     configuration_path: str
 
     def generate_configuration(self, configuration_path: str) -> None:

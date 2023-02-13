@@ -5,7 +5,7 @@ class Database:
         self.url = yaml_data["url"]
 
 
-class Conf:
+class Config:
     database: Database
 
     def __init__(self, yaml_data):

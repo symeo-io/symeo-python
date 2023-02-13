@@ -5,12 +5,12 @@ from mmap import ACCESS_READ, mmap  # type: ignore
 from symeo_python.yaml_converter.yaml_to_class_converter import YamlToClassPort
 
 
-class ConfParserPort:
+class ConfigParserPort:
     def generate_configuration(self, configuration_path: str) -> None:
         pass
 
 
-class ConfParserAdapter(ConfParserPort):
+class ConfigParserAdapter(ConfigParserPort):
 
     __SUPPORTED_EXTENSIONS__ = [".yml", ".yaml"]
     __yaml_to_class_port: YamlToClassPort

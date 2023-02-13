@@ -32,7 +32,7 @@ class Infrastructure:
         self.github = Github(yaml_data["github"])
 
 
-class Conf:
+class Config:
     infrastructure: Infrastructure
     application_name: str
 

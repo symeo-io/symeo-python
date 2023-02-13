@@ -12,12 +12,12 @@ class YamlToClassPort:
 class YamlToClassAdapter(YamlToClassPort):
 
     __target_file_path: str
-    __ROOT_CONFIG_CLASS_NAME = "Conf"
+    __ROOT_CONFIG_CLASS_NAME = "Config"
     __TAB = "    "
 
     def __init__(
         self,
-        target_file_path: str = f"{os.path.dirname(os.path.abspath(__file__))}/../config/conf.py",
+        target_file_path: str = f"{os.path.dirname(os.path.abspath(__file__))}/../config/config.py",
     ):
         self.__target_file_path = target_file_path
 

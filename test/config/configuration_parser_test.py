@@ -1,7 +1,7 @@
 import os
 import unittest
 
-from symeo_python.config.conf_parser import ConfParserAdapter
+from symeo_python.config.config_parser import ConfigParserAdapter
 from symeo_python.yaml_converter.yaml_to_class_converter import YamlToClassAdapter
 
 
@@ -11,7 +11,7 @@ class ConfigurationParserTest(unittest.TestCase):
 
     def test_should_not_load_configuration_for_missing_file(self):
         # Given
-        configuration_parser = ConfParserAdapter(YamlToClassAdapter("fake"))
+        configuration_parser = ConfigParserAdapter(YamlToClassAdapter("fake"))
         configuration_path = "fake"
         exception: Exception = None
 
@@ -29,7 +29,7 @@ class ConfigurationParserTest(unittest.TestCase):
 
     def test_should_not_load_configuration_for_file_not_in_yaml(self):
         # Given
-        configuration_parser = ConfParserAdapter(YamlToClassAdapter("fake"))
+        configuration_parser = ConfigParserAdapter(YamlToClassAdapter("fake"))
         configuration_path = f"{self.__current_absolute_path}/resources/not_supported_file_extension.json"
 
         exception: Exception = None
@@ -50,7 +50,7 @@ class ConfigurationParserTest(unittest.TestCase):
     def test_should_load_configuration(self):
         # Given
         yaml_to_class_converter_mock = YamlToClassAdapterMock("fake")
-        configuration_parser = ConfParserAdapter(yaml_to_class_converter_mock)
+        configuration_parser = ConfigParserAdapter(yaml_to_class_converter_mock)
         configuration_path = f"{self.__current_absolute_path}/resources/simple_yaml.yml"
 
         # When

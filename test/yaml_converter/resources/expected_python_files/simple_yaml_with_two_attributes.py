@@ -1,4 +1,4 @@
-class Conf:
+class Config:
     database: int
     name: str
 

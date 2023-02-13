@@ -1,11 +1,11 @@
 import os
 
 from symeo_python.cli.process_runner import ProcessRunnerPort
-from symeo_python.config.conf_loader import (
+from symeo_python.config.config_loader import (
     SYMEO_API_KEY,
     SYMEO_LOCAL_FILE,
 )
-from symeo_python.config.conf_parser import ConfParserPort
+from symeo_python.config.config_parser import ConfigParserPort
 
 
 class CliPort:
@@ -18,7 +18,7 @@ class CliPort:
 
 class DefaultCliAdapter(CliPort):
     def __init__(
-        self, conf_parser_port: ConfParserPort, process_runner_port: ProcessRunnerPort
+        self, conf_parser_port: ConfigParserPort, process_runner_port: ProcessRunnerPort
     ):
         self.__conf_parser_port = conf_parser_port
         self.__process_runner_port = process_runner_port

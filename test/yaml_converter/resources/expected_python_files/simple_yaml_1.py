@@ -1,4 +1,4 @@
-class Conf:
+class Config:
     database: str
 
     def __init__(self, yaml_data):

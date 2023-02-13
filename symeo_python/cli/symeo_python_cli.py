@@ -29,7 +29,7 @@ class SymeoPythonCli:
         ):
             config_contract_path: Path = Path(os.getcwd()) / config_contract
             print(
-                f"Starting to generate Conf class from configuration contract {config_contract_path}"
+                f"Starting to generate Config class from configuration contract {config_contract_path}"
             )
             self.__cli_port.generate_configuration_from_contract_file(
                 str(config_contract_path)
