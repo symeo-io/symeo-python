@@ -2,6 +2,8 @@
 
 The Symeo SDK made for interacting with your Symeo secrets and configuration from python applications.
 
+[![Symeo](https://circleci.com/gh/symeo-io/symeo-python.svg?style=svg)](https://circleci.com/gh/symeo-io/symeo-python)
+
 # Install
 
 ## Pip
@@ -52,7 +54,13 @@ aws:
 ```
 
 - You can nest properties to any depth level
-- Supported types are boolean, string, integer and float
+- Supported types are string and integer
+
+## Build Config class from the contract
+
+Generate the `Config` class corresponding to your contract using the following command :
+
+`symeo-python build`
 
 ## Create your local configuration file
 
@@ -97,13 +105,29 @@ class DatabaseClient:
 
 ## Wrap your application startup with the symeo command
 
+### Local run
 
-### Custom contract file
+To run locally your application using the configuration values file `symeo.local.yml`, you have to wrap your command to start your application with the `symeo-python` cli :
+
+`symeo-python start -- $your_command_to_start_your_application`
+
+1. Example 1 with `uvicorn`
+```shell
+symeo-python start -- uvicorn main:app
+```
+
+2. Example 2 with a simple python `main.py`
+
+```shell
+symeo-python start -- python main.py
+```
+
+### Custom values file
 
 You can specify the path and name of the local file with the `-f` flag:
 
 ```shell
-$ symeo-python start -f symeo.local.yml -- uvicorn main:app
+$ symeo-python start -f symeo.local.yml -- $your_command_to_start_your_application
 ```
 
 ### Start application with configuration from Symeo platform
