@@ -198,5 +198,3 @@ or
 .. code-block:: shell
 
     $ symeo-python start --help
-
-
