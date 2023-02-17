@@ -1,10 +1,34 @@
+<h1 align="center">
+<a href="https://app-staging.symeo.io/">
+  <img width="300" src="https://s3.eu-west-3.amazonaws.com/symeo.io-assets/symeo-logo.png" alt="symeo">
+</a>
+</h1>
+<p align="center">
+  <p align="center">Apps configuration as code. Easy. Centralized. Secured.</p>
+</p>
+
+
+<h4 align="center">
+  <a href="https://app-staging.symeo.io/">SaaS</a> |
+  <a href="https://symeoiomain-pivotconfiguration.gatsbyjs.io/">Website</a> |
+  <a href="https://symeoiomain-pivotconfiguration.gatsbyjs.io/">Docs</a>
+</h4>
+
+<h4 align="center">
+  <a href="https://github.com/medusajs/medusa/blob/master/LICENSE">
+    <img src="https://img.shields.io/badge/license-Apache-blue.svg" />
+  </a>
+ <a href="https://circleci.com/gh/symeo-io/symeo-python">
+    <img src="https://circleci.com/gh/symeo-io/symeo-python.svg?style=svg"/>
+ </a>
+
+</h4>
+
 # Symeo Python SDK
 
 The Symeo SDK made for interacting with your Symeo secrets and configuration from python applications.
 
-[![Symeo](https://circleci.com/gh/symeo-io/symeo-python.svg?style=svg)](https://circleci.com/gh/symeo-io/symeo-python)
-
-# Install
+#  Installation
 
 ## Pip
 
@@ -62,20 +86,6 @@ Generate the `Config` class corresponding to your contract using the following c
 
 `symeo-python build`
 
-## Create your local configuration file
-
-Create a `symeo.local.yml` file in the root of your project, defining the values matching your configuration contract:
-
-```yaml
-aws:
-  region: eu-west-3
-  database:
-    host: localhost
-    port: 5432
-    username: postgres
-    password: XPJc5qAbQcn77GWg
-```
-
 ## Use your configuration anywhere in your code
 
 Your configuration is then accessible with the import:
@@ -104,6 +114,21 @@ class DatabaseClient:
 ```
 
 ## Wrap your application startup with the symeo command
+
+### Create your local configuration file
+
+Create a `symeo.local.yml` file in the root of your project, defining the values matching your configuration contract:
+
+```yaml
+aws:
+  region: eu-west-3
+  database:
+    host: localhost
+    port: 5432
+    username: postgres
+    password: XPJc5qAbQcn77GWg
+```
+**Hint** : your can add your `symeo.local.yml` into your `.gitignore`
 
 ### Local run
 
@@ -141,6 +166,33 @@ $ symeo-python start -k $YOUR_ENVIRONMENT_API_KEY -- uvicorn main:app
 So the sdk fetch the values for the given environment and starts your application with those values.
 
 Follow the [Symeo platform documentation](https://symeo.io/) for more details.
+
+## Symeo CLI options
+
+### Options for the `build` command
+
+`-c, --contract-file`
+
+The path to your configuration contract file. Default is `symeo.config.yml`.
+
+### Options for the `start` command
+
+`-c, --contract-file`
+
+The path to your configuration contract file. Default is `symeo.config.yml`.
+
+`-f, --values-file`
+
+The path to your local values file. Default is `symeo.local.yml`.
+
+`-k, --api-key`
+
+The environment api key to use to fetch values from Symeo platform. If empty, values will be fetched from local value file (`symeo.local.yml` by default). If specified, parameter `-f, --values-file` is ignored.
+
+`-a, --api-url`
+
+The api endpoint used to fetch your configuration with the api key. Default is `https://api-staging.symeo.io/api/v1/values`.
+
 
 # Help
 

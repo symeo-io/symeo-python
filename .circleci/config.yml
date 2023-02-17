@@ -19,6 +19,9 @@ jobs:
       - run:
           name: Display coverage
           command: coverage report
+      - run:
+          name: Build Sphinx html documentation
+          command: sphinx-build -b html docs/source/ docs/build/html
 
 workflows:
   build_test:

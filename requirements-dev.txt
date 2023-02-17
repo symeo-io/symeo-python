@@ -10,3 +10,4 @@ Faker==0.7.4
 pytest==6.2.4
 build==0.10.0
 twine==4.0.2
+sphinx==6.1.3

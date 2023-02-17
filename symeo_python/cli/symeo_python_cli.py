@@ -8,7 +8,7 @@ from symeo_python.cli.cli import CliPort
 
 DEFAULT_CONFIG_CONTRACT_PATH = "./symeo.config.yml"
 DEFAULT_CONFIG_VALUES_PATH = "./symeo.local.yml"
-DEFAULT_SYMEO_API_URL = "https://config-staging.symeo.io/api/v1/values"
+DEFAULT_SYMEO_API_URL = "https://api-staging.symeo.io/api/v1/values"
 
 
 class SymeoPythonCli:

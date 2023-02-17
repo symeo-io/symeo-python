@@ -5,6 +5,7 @@ setup(
     version="0.0.1",
     packages=find_packages(exclude=["test"]),
     install_requires=["pyyaml", "typer[all]", "requests"],
+    license="Apache-2.0 license",
     extra_require={},
     url="https://github.com/symeo-io/symeo-python",
     author="Symeo.io",
