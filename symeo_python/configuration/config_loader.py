@@ -19,7 +19,7 @@ class ConfigLoaderAdapter(ConfigLoaderPort):
     def __init__(self, symeo_api_client_port: SymeoApiClientPort):
         self.__symeo_api_client_port = symeo_api_client_port
 
-    __config: Config
+    __config: Config = None
 
     def load_config_from_env(self) -> Config:
         if self.__config is not None:
