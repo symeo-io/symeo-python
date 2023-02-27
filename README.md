@@ -157,7 +157,7 @@ $ symeo-python start -f symeo.local.yml -- $your_command_to_start_your_applicati
 
 ### Start application with configuration from Symeo platform
 
-After creating an environment and its api key in the [Symeo platform](https://app-config-staging.symeo.io/), run
+After creating an environment and its api key in the [Symeo platform](https://app.symeo.io/), run
 
 ```shell
 $ symeo-python start -k $YOUR_ENVIRONMENT_API_KEY -- uvicorn main:app
@@ -191,7 +191,7 @@ The environment api key to use to fetch values from Symeo platform. If empty, va
 
 `-a, --api-url`
 
-The api endpoint used to fetch your configuration with the api key. Default is `https://api-staging.symeo.io/api/v1/values`.
+The api endpoint used to fetch your configuration with the api key. Default is `https://api.symeo.io/api/v1/values`.
 
 
 # Help
