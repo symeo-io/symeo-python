@@ -1,0 +1,11 @@
+database:
+  host:
+    type: string
+  port:
+    type: integer
+client:
+  premium:
+    type: boolean
+  average-cart-price:
+    type: float
+

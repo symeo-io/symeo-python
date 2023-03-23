@@ -42,6 +42,14 @@ class YamlToClassConverterTest(unittest.TestCase):
             "yaml_with_nested_conf.yml", "yaml_with_nested_conf.py"
         )
 
+    def test_should_test_yaml_files_with_every_conf_types(self):
+        self.__assert_generated_python_file_equals_expected_python_file(
+            "yaml_simple_with_every_conf_type.yml", "yaml_simple_with_every_conf_type.py"
+        )
+        self.__assert_generated_python_file_equals_expected_python_file(
+            "yaml_complex_with_every_conf_type.yml", "yaml_complex_with_every_conf_type.py"
+        )
+
     def test_should_convert_complex_name(self):
         self.__assert_generated_python_file_equals_expected_python_file(
             "yaml_with_complex_name.yml", "yaml_with_complex_name.py"
