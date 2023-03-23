@@ -87,4 +87,8 @@ class YamlToClassAdapter(YamlToClassPort):
             return "str"
         elif type == "integer":
             return "int"
+        elif type == "float":
+            return "float"
+        elif type == "boolean":
+            return "bool"
         raise Exception(f"Wrong type {type}")
