@@ -1,3 +1,6 @@
+from typing import Optional
+
+
 class Config:
     database: str
 

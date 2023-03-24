@@ -16,7 +16,6 @@ from symeo_python.yaml_converter.yaml_to_class_converter import YamlToClassAdapt
 
 
 class YamlToClassConverterTest(unittest.TestCase):
-
     __temp_dir: str
     __current_absolute_path = os.path.dirname(os.path.abspath(__file__))
 
@@ -36,18 +35,22 @@ class YamlToClassConverterTest(unittest.TestCase):
         self.__assert_generated_python_file_equals_expected_python_file(
             "simple_yaml_with_two_attributes.yml", "simple_yaml_with_two_attributes.py"
         )
+        self.__assert_generated_python_file_equals_expected_python_file(
+            "simple_yaml_with_every_conf_type.yml", "simple_yaml_with_every_conf_type.py"
+        )
+        self.__assert_generated_python_file_equals_expected_python_file(
+            "simple_yaml_with_optional.yml", "simple_yaml_with_optional.py"
+        )
 
     def test_should_convert_complex_yaml_files(self):
         self.__assert_generated_python_file_equals_expected_python_file(
             "yaml_with_nested_conf.yml", "yaml_with_nested_conf.py"
         )
-
-    def test_should_test_yaml_files_with_every_conf_types(self):
         self.__assert_generated_python_file_equals_expected_python_file(
-            "yaml_simple_with_every_conf_type.yml", "yaml_simple_with_every_conf_type.py"
+            "complex_yaml_with_every_conf_type.yml", "complex_yaml_with_every_conf_type.py"
         )
         self.__assert_generated_python_file_equals_expected_python_file(
-            "yaml_complex_with_every_conf_type.yml", "yaml_complex_with_every_conf_type.py"
+            "complex_yaml_with_optional.yml", "complex_yaml_with_optional.py"
         )
 
     def test_should_convert_complex_name(self):
@@ -76,7 +79,7 @@ class YamlToClassConverterTest(unittest.TestCase):
             self.assertEqual(config.infrastructure.github.api, "http://github.api.com")
 
     def __assert_generated_python_file_equals_expected_python_file(
-        self, yaml_file_name, python_file_name
+            self, yaml_file_name, python_file_name
     ):
         given_yaml_file = f"{self.__current_absolute_path}/resources/given_contract_yaml_files/{yaml_file_name}"
         target_path = f"{self.__temp_dir}/%s" % python_file_name

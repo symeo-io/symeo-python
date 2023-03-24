@@ -1,0 +1,9 @@
+database:
+  host:
+    type: string
+    optional: true
+  port:
+    type: integer
+  password:
+    type: string
+    optional: false
