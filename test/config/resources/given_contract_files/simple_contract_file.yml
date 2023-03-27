@@ -1,0 +1,6 @@
+database:
+  host:
+    type: string
+  port:
+    type: integer
+    optional: true

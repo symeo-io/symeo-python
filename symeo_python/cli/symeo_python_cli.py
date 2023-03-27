@@ -18,7 +18,7 @@ class SymeoPythonCli:
         self.__cli_port = cli_port
 
     def load_commands(
-        self,
+            self,
     ) -> Typer:
         cli = Typer()
 
@@ -33,23 +33,44 @@ class SymeoPythonCli:
 
         @cli.command()
         def build(
-            config_contract: str = Option(
-                DEFAULT_CONFIG_CONTRACT_PATH, "--config-contract", "-c"
-            )
+                config_contract: str = Option(
+                    DEFAULT_CONFIG_CONTRACT_PATH, "--config-contract", "-c"
+                )
         ):
             generate_config(config_contract)
 
         @cli.command()
+        def validate(
+                api_key: str = Option("", "--api-key", "-k"),
+                api_url: str = Option(DEFAULT_SYMEO_API_URL, "--api-url", "-a"),
+                config_values: str = Option(
+                    DEFAULT_CONFIG_VALUES_PATH, "--config-values", "-f"
+                ),
+                config_contract: str = Option(
+                    DEFAULT_CONFIG_CONTRACT_PATH, "--config-contract", "-c"
+                ),
+        ):
+            generate_config(config_contract)
+            config_values_path: Path = Path(os.getcwd()) / config_values
+            cli_input_data = {
+                "config_values_path": str(config_values_path),
+            }
+            if api_key != "":
+                cli_input_data["api_key"] = api_key
+                cli_input_data["api_url"] = api_url
+            self.__cli_port.prepare_env_and_start_validation(config_contract, cli_input_data)
+
+        @cli.command()
         def start(
-            sub_process: List[str],
-            api_key: str = Option("", "--api-key", "-k"),
-            api_url: str = Option(DEFAULT_SYMEO_API_URL, "--api-url", "-a"),
-            config_values: str = Option(
-                DEFAULT_CONFIG_VALUES_PATH, "--config-values", "-f"
-            ),
-            config_contract: str = Option(
-                DEFAULT_CONFIG_CONTRACT_PATH, "--config-contract", "-c"
-            ),
+                sub_process: List[str],
+                api_key: str = Option("", "--api-key", "-k"),
+                api_url: str = Option(DEFAULT_SYMEO_API_URL, "--api-url", "-a"),
+                config_values: str = Option(
+                    DEFAULT_CONFIG_VALUES_PATH, "--config-values", "-f"
+                ),
+                config_contract: str = Option(
+                    DEFAULT_CONFIG_CONTRACT_PATH, "--config-contract", "-c"
+                ),
         ):
             generate_config(config_contract)
             config_values_path: Path = Path(os.getcwd()) / config_values

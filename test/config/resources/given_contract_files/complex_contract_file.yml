@@ -1,0 +1,22 @@
+database:
+  host:
+    type: string
+  port:
+    type: integer
+  password:
+    type: string
+    optional: false
+vcs-provider:
+  api-limit:
+    type: float
+    optional: true
+  local:
+    type: boolean
+    optional: true
+  remote-vcs:
+    github:
+      api-url:
+        type: string
+    gitlab:
+      api-url:
+        type: string
