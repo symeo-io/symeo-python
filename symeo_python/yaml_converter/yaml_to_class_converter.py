@@ -10,14 +10,13 @@ class YamlToClassPort:
 
 
 class YamlToClassAdapter(YamlToClassPort):
-
     __target_file_path: str
     __ROOT_CONFIG_CLASS_NAME = "Config"
     __TAB = "    "
 
     def __init__(
-        self,
-        target_file_path: str = f"{os.path.dirname(os.path.abspath(__file__))}/../configuration/configuration.py",
+            self,
+            target_file_path: str = f"{os.path.dirname(os.path.abspath(__file__))}/../configuration/configuration.py",
     ):
         self.__target_file_path = target_file_path
 
@@ -32,7 +31,7 @@ class YamlToClassAdapter(YamlToClassPort):
                 file.write(class_definition)
 
     def __yaml_data_to_class_with_mapping_methods(
-        self, yaml_data: dict, class_name: str, nested_classes: List[str]
+            self, yaml_data: dict, class_name: str, nested_classes: List[str]
     ) -> str:
         attribute = ""
         constructor = f"{self.__TAB}def __init__(self, yaml_data):\n"
@@ -44,7 +43,7 @@ class YamlToClassAdapter(YamlToClassPort):
         )
         conf_class = ""
         if class_name == self.__ROOT_CONFIG_CLASS_NAME:
-            python_conf_file_content = ""
+            python_conf_file_content = "from typing import Optional\n\n\n"
             for nested_classe in nested_classes:
                 python_conf_file_content += f"{nested_classe}\n\n"
             conf_class = python_conf_file_content
@@ -52,14 +51,19 @@ class YamlToClassAdapter(YamlToClassPort):
         return conf_class
 
     def __yaml_data_to_attribute_constructor_and_nested_classes(
-        self, attribute, constructor, nested_classes, yaml_data
+            self, attribute, constructor, nested_classes, yaml_data
     ):
         for key in yaml_data:
             attribute_name = str(key).replace("-", "_")
             if "type" in yaml_data[key]:
-                constructor += f'{self.__TAB}{self.__TAB}self.{attribute_name} = yaml_data["{key}"]\n'
                 type = self.__get_type(yaml_data[key]["type"])
-                attribute += f"{self.__TAB}{attribute_name}: {type}\n"
+                optional = self.__get_optional(yaml_data[key])
+                if optional:
+                    constructor += f'{self.__TAB}{self.__TAB}self.{attribute_name} = yaml_data.get("{key}")\n'
+                    attribute += f"{self.__TAB}{attribute_name}: Optional[{type}]\n"
+                else:
+                    constructor += f'{self.__TAB}{self.__TAB}self.{attribute_name} = yaml_data["{key}"]\n'
+                    attribute += f"{self.__TAB}{attribute_name}: {type}\n"
             else:
                 nested_class_name = self.__get_camel_cased_class_name(key)
                 constructor += f'{self.__TAB}{self.__TAB}self.{attribute_name} = {nested_class_name}(yaml_data["{key}"])\n'
@@ -92,3 +96,8 @@ class YamlToClassAdapter(YamlToClassPort):
         elif type == "boolean":
             return "bool"
         raise Exception(f"Wrong type {type}")
+
+    @staticmethod
+    def __get_optional(key_attribute: dict) -> bool:
+        optional: bool = key_attribute.get("optional")
+        return True if optional else False

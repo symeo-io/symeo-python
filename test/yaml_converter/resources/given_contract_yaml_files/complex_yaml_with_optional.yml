@@ -1,0 +1,25 @@
+database:
+  postgres:
+    host:
+      type: string
+      optional: true
+    port:
+      type: integer
+    password:
+      type: string
+      optional: false
+  mongo-db:
+    host:
+      type: string
+    port:
+      type: integer
+vcs-provider:
+  call-amount-average:
+    type: float
+    optional: true
+  github:
+    is-local:
+      type: boolean
+  gitlab:
+    is-local:
+      type: boolean

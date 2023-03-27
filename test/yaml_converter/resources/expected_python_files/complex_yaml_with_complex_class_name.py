@@ -1,3 +1,6 @@
+from typing import Optional
+
+
 class MongoDb:
     url: str
     port: int

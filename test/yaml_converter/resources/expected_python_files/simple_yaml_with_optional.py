@@ -2,10 +2,14 @@ from typing import Optional
 
 
 class Database:
-    url: str
+    host: Optional[str]
+    port: int
+    password: str
 
     def __init__(self, yaml_data):
-        self.url = yaml_data["url"]
+        self.host = yaml_data.get("host")
+        self.port = yaml_data["port"]
+        self.password = yaml_data["password"]
 
 
 class Config:

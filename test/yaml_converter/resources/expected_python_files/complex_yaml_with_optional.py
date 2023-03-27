@@ -1,10 +1,13 @@
+from typing import Optional
+
+
 class Postgres:
-    host: str
+    host: Optional[str]
     port: int
     password: str
 
     def __init__(self, yaml_data):
-        self.host = yaml_data["host"]
+        self.host = yaml_data.get("host")
         self.port = yaml_data["port"]
         self.password = yaml_data["password"]
 
@@ -42,12 +45,12 @@ class Gitlab:
 
 
 class VcsProvider:
-    call_amount_average: float
+    call_amount_average: Optional[float]
     github: Github
     gitlab: Gitlab
 
     def __init__(self, yaml_data):
-        self.call_amount_average = yaml_data["call-amount-average"]
+        self.call_amount_average = yaml_data.get("call-amount-average")
         self.github = Github(yaml_data["github"])
         self.gitlab = Gitlab(yaml_data["gitlab"])
 

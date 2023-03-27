@@ -1,3 +1,6 @@
+from typing import Optional
+
+
 class Database:
     host: str
     port: int
