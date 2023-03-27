@@ -30,9 +30,7 @@ class ConfigValidatorAdapter(ConfigValidatorPort):
     def __validate_configuration_values_from_symeo_api(self, config_contract: str) -> List[str]:
         with open(config_contract, "r") as yaml_contract:
             contract = yaml.load(yaml_contract, Loader=yaml.FullLoader)
-        print(self.__symeo_api_client_port)
         values = self.__symeo_api_client_port.get_conf_values_for_api_key(os.getenv(SYMEO_API_URL), os.getenv(SYMEO_API_KEY))
-        print(values)
         return self.__check_contract_type_compatibility(contract, values)
 
     def __validate_yaml_values(self, config_contract: str) -> List[str]:
@@ -45,9 +43,6 @@ class ConfigValidatorAdapter(ConfigValidatorPort):
     def __check_contract_type_compatibility(self, contract: dict, values: dict, parent_path: str = None):
         errors = []
         for property_name in contract.keys():
-            print(property_name)
-            print(contract)
-            print(values)
             contract_property = contract.get(property_name)
             values_property = values.get(property_name)
 
@@ -65,7 +60,6 @@ class ConfigValidatorAdapter(ConfigValidatorPort):
 
             if self.__is_defined(values_property) and not self.__contract_property_and_value_have_same_type(contract_property, values_property):
                 errors.append(self.__build_wrong_type_error(property_name, parent_path, contract_property, values_property))
-        print(errors)
         return errors
 
     @staticmethod
