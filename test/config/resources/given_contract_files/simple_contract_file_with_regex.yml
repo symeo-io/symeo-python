@@ -1,0 +1,10 @@
+database:
+  host:
+    type: string
+  port:
+    type: integer
+    optional: true
+user:
+  email:
+    type: string
+    regex: '^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+).([a-zA-Z]{2,5})$'

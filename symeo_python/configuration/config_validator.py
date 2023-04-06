@@ -1,4 +1,5 @@
 import os
+import re
 from typing import List
 
 import yaml
@@ -30,7 +31,8 @@ class ConfigValidatorAdapter(ConfigValidatorPort):
     def __validate_configuration_values_from_symeo_api(self, config_contract: str) -> List[str]:
         with open(config_contract, "r") as yaml_contract:
             contract = yaml.load(yaml_contract, Loader=yaml.FullLoader)
-        values = self.__symeo_api_client_port.get_conf_values_for_api_key(os.getenv(SYMEO_API_URL), os.getenv(SYMEO_API_KEY))
+        values = self.__symeo_api_client_port.get_conf_values_for_api_key(os.getenv(SYMEO_API_URL),
+                                                                          os.getenv(SYMEO_API_KEY))
         return self.__check_contract_type_compatibility(contract, values)
 
     def __validate_yaml_values(self, config_contract: str) -> List[str]:
@@ -51,15 +53,23 @@ class ConfigValidatorAdapter(ConfigValidatorPort):
                 continue
 
             if not self.__is_contract_property(contract_property) and self.__is_defined(values_property):
-                errors += self.__check_contract_type_compatibility(contract_property, values_property, self.__build_parent_path(parent_path, property_name))
+                errors += self.__check_contract_type_compatibility(contract_property, values_property,
+                                                                   self.__build_parent_path(parent_path, property_name))
                 continue
 
             if not self.__is_contract_property_optional(contract_property) and self.__is_undefined(values_property):
                 errors.append(self.__build_missing_property_error(property_name, parent_path))
                 continue
 
-            if self.__is_defined(values_property) and not self.__contract_property_and_value_have_same_type(contract_property, values_property):
-                errors.append(self.__build_wrong_type_error(property_name, parent_path, contract_property, values_property))
+            if self.__is_defined(values_property) and not self.__contract_property_and_value_have_same_type(
+                    contract_property, values_property):
+                errors.append(
+                    self.__build_wrong_type_error(property_name, parent_path, contract_property, values_property))
+                continue
+            if self.__is_defined(values_property) and self.__has_regex(
+                    contract_property) and not self.__value_match_contract_regex(contract_property, values_property):
+                errors.append(
+                    self.__build_wrong_regex_error(property_name, parent_path, contract_property, values_property))
         return errors
 
     @staticmethod
@@ -72,10 +82,6 @@ class ConfigValidatorAdapter(ConfigValidatorPort):
     @staticmethod
     def __is_defined(values_property: dict) -> bool:
         return (values_property is not None) and (values_property != '')
-
-    @staticmethod
-    def __build_parent_path(previous_parent_path: str, property_name: str) -> str:
-        return property_name if previous_parent_path is None else f'{previous_parent_path}.{property_name}'
 
     @staticmethod
     def __is_contract_property_optional(contract_property: dict) -> bool:
@@ -95,13 +101,28 @@ class ConfigValidatorAdapter(ConfigValidatorPort):
             return True
         return False
 
+    @staticmethod
+    def __has_regex(contract_property) -> bool:
+        return contract_property.get("regex") is not None
+
+    @staticmethod
+    def __value_match_contract_regex(contract_property, values_property):
+        return contract_property.get("regex") is not None and re.search(contract_property.get("regex"), values_property)
+
     def __build_missing_property_error(self, property_name, parent_path) -> str:
         displayed_property_name = self.__build_parent_path(parent_path, property_name)
         return f'The property [bold white]"{displayed_property_name}"[/bold white] of your configuration contract [bold red]is missing[/bold red] in your configuration values.'
 
-    def __build_wrong_type_error(self, property_name: str, parent_path: str, contract_property: dict, values_property):
+    @staticmethod
+    def __build_parent_path(previous_parent_path: str, property_name: str) -> str:
+        return property_name if previous_parent_path is None else f'{previous_parent_path}.{property_name}'
+
+    def __build_wrong_type_error(self, property_name: str, parent_path: str, contract_property: dict,
+                                 values_property) -> str:
         displayed_property_name = self.__build_parent_path(parent_path, property_name)
         return f'Configuration property [bold white]"{displayed_property_name}"[/bold white] has type [bold red]"{type(values_property)}"[/bold red] while configuration contract defined "{displayed_property_name}"' \
                f' as [bold green]"{contract_property.get("type")}"[/bold green]'
 
-
+    def __build_wrong_regex_error(self, property_name, parent_path, contract_property, values_property) -> str:
+        displayed_property_name = self.__build_parent_path(parent_path, property_name)
+        return f'Configuration property "{displayed_property_name}" with value "{values_property}" does not match regex "{contract_property.get("regex")}" defined in contract'

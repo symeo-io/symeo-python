@@ -1,0 +1,29 @@
+database:
+  host:
+    type: string
+  port:
+    type: integer
+  password:
+    type: string
+    optional: false
+user:
+  email:
+    type: string
+    regex: '^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+).([a-zA-Z]{2,5})$'
+  password:
+    type: string
+    regex: '^[a-zA-Z0-9]+$'
+vcs-provider:
+  api-limit:
+    type: float
+    optional: true
+  local:
+    type: boolean
+    optional: true
+  remote-vcs:
+    github:
+      api-url:
+        type: string
+    gitlab:
+      api-url:
+        type: string
