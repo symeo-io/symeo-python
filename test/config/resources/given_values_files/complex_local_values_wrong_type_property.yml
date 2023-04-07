@@ -1,0 +1,12 @@
+database:
+  host: "host-test"
+  port: 9999
+  password: "Passw0rd"
+vcs-provider:
+  api-limit: 100.0
+  local: 2000
+  remote-vcs:
+    github:
+      api-url: 999.0
+    gitlab:
+      api-url: "https://gitlab.com"
