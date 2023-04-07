@@ -1,6 +1,10 @@
 import os
 from typing import List
 
+import typer
+from rich.console import Console
+from rich.table import Table
+
 from symeo_python.cli.process_runner import ProcessRunnerPort
 from symeo_python.configuration.config_loader import (
     SYMEO_API_KEY,
@@ -38,9 +42,12 @@ class DefaultCliAdapter(CliPort):
         self.__prepare_env(cli_input_data)
         errors: List[str] = self.__config_validator_port.validate_config_from_env(config_contract)
         if len(errors) > 0:
+            console = Console()
+            table = Table("N°", "Error", show_lines=True)
             for error in errors:
-                print(error)
-                exit(1)
+                table.add_row(str(errors.index(error) + 1), error)
+            console.print(table)
+            exit(1)
         print("Configuration values matching contract")
 
     def prepare_env_and_start_sub_process(self, cli_input_data: dict):

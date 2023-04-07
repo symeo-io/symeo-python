@@ -130,7 +130,3 @@ dmypy.json
 
 # Pycharm
 .idea
-
-# Local files for tests
-./symeo.config.yml
-./symeo.local.yml

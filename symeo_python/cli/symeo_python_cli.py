@@ -2,6 +2,7 @@ import os
 from pathlib import Path
 from typing import List
 
+import typer
 from typer import Option, Typer  # type: ignore
 
 from symeo_python.cli.cli import CliPort

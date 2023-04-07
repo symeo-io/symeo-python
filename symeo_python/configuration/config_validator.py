@@ -97,11 +97,11 @@ class ConfigValidatorAdapter(ConfigValidatorPort):
 
     def __build_missing_property_error(self, property_name, parent_path) -> str:
         displayed_property_name = self.__build_parent_path(parent_path, property_name)
-        return f'The property "{displayed_property_name}" of your configuration contract is missing in your configuration values.'
+        return f'The property [bold white]"{displayed_property_name}"[/bold white] of your configuration contract [bold red]is missing[/bold red] in your configuration values.'
 
     def __build_wrong_type_error(self, property_name: str, parent_path: str, contract_property: dict, values_property):
         displayed_property_name = self.__build_parent_path(parent_path, property_name)
-        return f'Configuration property "{displayed_property_name}" has type "{type(values_property)}" while configuration contract defined "{displayed_property_name}"' \
-               f' as "{contract_property.get("type")}"'
+        return f'Configuration property [bold white]"{displayed_property_name}"[/bold white] has type [bold red]"{type(values_property)}"[/bold red] while configuration contract defined "{displayed_property_name}"' \
+               f' as [bold green]"{contract_property.get("type")}"[/bold green]'
 
 
