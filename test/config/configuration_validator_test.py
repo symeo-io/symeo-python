@@ -39,23 +39,23 @@ class ConfigurationValidatorTest(unittest.TestCase):
 
     def test_should_refuse_validation_for_configuration_with_local_values(self):
         expected_errors_1 = [
-            f'The property "vcs-provider.remote-vcs.github" of your configuration contract is missing in your configuration values.']
+            f'The property [bold white]"vcs-provider.remote-vcs.github"[/bold white] of your configuration contract [bold red]is missing[/bold red] in your configuration values.']
         self.__should_refuse_validation_for_configuration_with_local_values("complex_contract_file.yml",
                                                                             "complex_local_values_missing_contract_property.yml",
                                                                             expected_errors_1)
         expected_errors_2 = [
-            f'Configuration property "vcs-provider.local" has type "<class \'int\'>" while configuration contract defined "vcs-provider.local" as "boolean"',
-            f'Configuration property "vcs-provider.remote-vcs.github.api-url" has type "<class \'float\'>" while configuration contract defined "vcs-provider.remote-vcs.github.api-url" as "string"']
+            f'Configuration property [bold white]"vcs-provider.local"[/bold white] has type [bold red]"<class \'int\'>"[/bold red] while configuration contract defined "vcs-provider.local" as [bold green]"boolean"[/bold green]',
+            f'Configuration property [bold white]"vcs-provider.remote-vcs.github.api-url"[/bold white] has type [bold red]"<class \'float\'>"[/bold red] while configuration contract defined "vcs-provider.remote-vcs.github.api-url" as [bold green]"string"[/bold green]']
         self.__should_refuse_validation_for_configuration_with_local_values("complex_contract_file.yml",
                                                                             "complex_local_values_wrong_type_property.yml",
                                                                             expected_errors_2)
         expected_errors_3 = [
-            f'The property "database.host" of your configuration contract is missing in your configuration values.']
+            f'The property [bold white]"database.host"[/bold white] of your configuration contract [bold red]is missing[/bold red] in your configuration values.']
         self.__should_refuse_validation_for_configuration_with_local_values("simple_contract_file.yml",
                                                                             "simple_local_values_missing_contract_property.yml",
                                                                             expected_errors_3)
         expected_errors_4 = [
-            f'Configuration property "database.host" has type "<class \'int\'>" while configuration contract defined "database.host" as "string"']
+            f'Configuration property [bold white]"database.host"[/bold white] has type [bold red]"<class \'int\'>"[/bold red] while configuration contract defined "database.host" as [bold green]"string"[/bold green]']
         self.__should_refuse_validation_for_configuration_with_local_values("simple_contract_file.yml",
                                                                             "simple_local_values_wrong_type_property.yml",
                                                                             expected_errors_4)
