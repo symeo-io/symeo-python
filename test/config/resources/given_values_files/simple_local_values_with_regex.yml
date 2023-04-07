@@ -1,0 +1,5 @@
+database:
+  host: "host-test"
+  port: 9999
+user:
+  email: "toto.test@gmail.com"

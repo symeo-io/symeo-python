@@ -4,13 +4,10 @@ import tempfile
 import unittest
 from typing import List
 from unittest import mock
-from unittest.mock import MagicMock
 
-import faker
 import yaml
 
 from symeo_python.api_client.symeo_api_client import SymeoApiClientAdapter
-from symeo_python.configuration.config_loader import SYMEO_API_KEY
 from symeo_python.configuration.config_validator import ConfigValidatorAdapter
 
 
@@ -28,10 +25,14 @@ class ConfigurationValidatorTest(unittest.TestCase):
                                                                             "simple_local_values.yml")
         self.__should_successfully_validate_configuration_with_local_values("simple_contract_file.yml",
                                                                             "simple_local_values_without_optionals.yml")
+        self.__should_successfully_validate_configuration_with_local_values("simple_contract_file_with_regex.yml",
+                                                                            "simple_local_values_with_regex.yml")
         self.__should_successfully_validate_configuration_with_local_values("complex_contract_file.yml",
                                                                             "complex_local_values.yml")
         self.__should_successfully_validate_configuration_with_local_values("complex_contract_file.yml",
                                                                             "complex_local_values_without_optionals.yml")
+        self.__should_successfully_validate_configuration_with_local_values("complex_contract_file_with_regex.yml",
+                                                                            "complex_local_values_with_regex.yml")
 
     def test_should_fetch_api_values_and_validate_configuration(self):
         self.__should_successfully_validate_configuration_with_api_values("simple_contract_file.yml",
@@ -59,6 +60,18 @@ class ConfigurationValidatorTest(unittest.TestCase):
         self.__should_refuse_validation_for_configuration_with_local_values("simple_contract_file.yml",
                                                                             "simple_local_values_wrong_type_property.yml",
                                                                             expected_errors_4)
+        expected_errors_5 = [
+            r'Configuration property [bold white]"user.email"[/bold white] with value "regex-error" does not match regex [bold green]"^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+).([a-zA-Z]{2,5})$"[/bold green] defined in contract']
+        self.__should_refuse_validation_for_configuration_with_local_values("simple_contract_file_with_regex.yml",
+                                                                            "simple_local_values_wrong_regex.yml",
+                                                                            expected_errors_5)
+        expected_errors_6 = [
+            r'Configuration property [bold white]"user.email"[/bold white] with value "toto.test" does not match regex [bold green]"^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+).([a-zA-Z]{2,5})$"[/bold green] defined in contract',
+            r'Configuration property [bold white]"user.password"[/bold white] with value "passw0rd123!" does not match regex [bold green]"^[a-zA-Z0-9]+$"[/bold green] defined in contract'
+        ]
+        self.__should_refuse_validation_for_configuration_with_local_values("complex_contract_file_with_regex.yml",
+                                                                            "complex_local_values_wrong_regex.yml",
+                                                                            expected_errors_6)
 
     def __should_refuse_validation_for_configuration_with_local_values(self, contract_file: str, values_file: str,
                                                                        expected_errors: List[str]):
