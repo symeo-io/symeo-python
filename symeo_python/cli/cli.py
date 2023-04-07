@@ -35,13 +35,7 @@ class DefaultCliAdapter(CliPort):
         self.__conf_parser_port.generate_configuration(config_contract)
 
     def prepare_env_and_start_validation(self, config_contract: str, cli_input_data: dict):
-        if "api_key" in cli_input_data and "api_url" in cli_input_data:
-            os.environ[SYMEO_API_KEY] = cli_input_data["api_key"]
-            os.environ[SYMEO_API_URL] = cli_input_data["api_url"]
-        elif "config_values_path" in cli_input_data:
-            os.environ[SYMEO_LOCAL_FILE] = cli_input_data["config_values_path"]
-        else:
-            raise Exception("Missing api_key/api_url or config_values_path")
+        self.__prepare_env(cli_input_data)
         errors: List[str] = self.__config_validator_port.validate_config_from_env(config_contract)
         if len(errors) > 0:
             for error in errors:
@@ -50,6 +44,11 @@ class DefaultCliAdapter(CliPort):
         print("Configuration values matching contract")
 
     def prepare_env_and_start_sub_process(self, cli_input_data: dict):
+        self.__prepare_env(cli_input_data)
+        self.__process_runner_port.run_process(cli_input_data["sub_process"])
+
+    @staticmethod
+    def __prepare_env(cli_input_data: dict) -> None:
         if "api_key" in cli_input_data and "api_url" in cli_input_data:
             os.environ[SYMEO_API_KEY] = cli_input_data["api_key"]
             os.environ[SYMEO_API_URL] = cli_input_data["api_url"]
@@ -57,4 +56,3 @@ class DefaultCliAdapter(CliPort):
             os.environ[SYMEO_LOCAL_FILE] = cli_input_data["config_values_path"]
         else:
             raise Exception("Missing api_key/api_url or config_values_path")
-        self.__process_runner_port.run_process(cli_input_data["sub_process"])

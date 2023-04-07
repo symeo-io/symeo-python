@@ -27,10 +27,10 @@ class CliTest(unittest.TestCase):
 
     def test_should_prepare_env_with_api_key_and_run_sub_process(self):
         # Given
-        conf_parser_mock = ConfigParserAdapterMock()
-        conf_validate_mock = ConfigValidatorAdapterMock()
+        config_parser_mock = ConfigParserAdapterMock()
+        config_validator_mock = ConfigValidatorAdapterMock()
         process_runner_adapter_mock = ProcessRunnerAdapterMock()
-        cli_adapter = DefaultCliAdapter(conf_parser_mock, conf_validate_mock, process_runner_adapter_mock)
+        cli_adapter = DefaultCliAdapter(config_parser_mock, config_validator_mock, process_runner_adapter_mock)
         api_key = "FAKE_API_KEY_111"
         api_url = "http://fake.111"
         sub_process = ["echo", "'Test1'"]
@@ -49,10 +49,10 @@ class CliTest(unittest.TestCase):
 
     def test_should_prepare_env_with_local_file_and_run_sub_process(self):
         # Given
-        conf_parser_mock = ConfigParserAdapterMock()
-        conf_validate_mock = ConfigValidatorAdapterMock()
+        config_parser_mock = ConfigParserAdapterMock()
+        config_validate_mock = ConfigValidatorAdapterMock()
         process_runner_adapter_mock = ProcessRunnerAdapterMock()
-        cli_adapter = DefaultCliAdapter(conf_parser_mock, conf_validate_mock, process_runner_adapter_mock)
+        cli_adapter = DefaultCliAdapter(config_parser_mock, config_validate_mock, process_runner_adapter_mock)
         config_values_path = "./fake_local_file_111.yml"
         api_url = "http://fake.111"
         sub_process = ["echo", "'Test2'"]
@@ -71,10 +71,10 @@ class CliTest(unittest.TestCase):
 
     def test_should_raise_exception_for_missing_cli_input_data(self):
         # Given
-        conf_parser_mock = ConfigParserAdapterMock()
-        conf_validate_mock = ConfigValidatorAdapterMock()
+        config_parser_mock = ConfigParserAdapterMock()
+        config_validator_mock = ConfigValidatorAdapterMock()
         process_runner_adapter_mock = ProcessRunnerAdapterMock()
-        cli_adapter = DefaultCliAdapter(conf_parser_mock, conf_validate_mock, process_runner_adapter_mock)
+        cli_adapter = DefaultCliAdapter(config_parser_mock, config_validator_mock, process_runner_adapter_mock)
         sub_process = ["echo", "'Test2'"]
         cli_input_data = {
             "sub_process": sub_process,
