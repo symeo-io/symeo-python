@@ -125,4 +125,4 @@ class ConfigValidatorAdapter(ConfigValidatorPort):
 
     def __build_wrong_regex_error(self, property_name, parent_path, contract_property, values_property) -> str:
         displayed_property_name = self.__build_parent_path(parent_path, property_name)
-        return f'Configuration property "{displayed_property_name}" with value "{values_property}" does not match regex "{contract_property.get("regex")}" defined in contract'
+        return f'Configuration property [bold white]"{displayed_property_name}"[/bold white] with value "{values_property}" does not match regex [bold green]"{contract_property.get("regex")}"[/bold green] defined in contract'

@@ -61,13 +61,13 @@ class ConfigurationValidatorTest(unittest.TestCase):
                                                                             "simple_local_values_wrong_type_property.yml",
                                                                             expected_errors_4)
         expected_errors_5 = [
-            r'Configuration property "user.email" with value "regex-error" does not match regex "^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+).([a-zA-Z]{2,5})$" defined in contract']
+            r'Configuration property [bold white]"user.email"[/bold white] with value "regex-error" does not match regex [bold green]"^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+).([a-zA-Z]{2,5})$"[/bold green] defined in contract']
         self.__should_refuse_validation_for_configuration_with_local_values("simple_contract_file_with_regex.yml",
                                                                             "simple_local_values_wrong_regex.yml",
                                                                             expected_errors_5)
         expected_errors_6 = [
-            r'Configuration property "user.email" with value "toto.test" does not match regex "^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+).([a-zA-Z]{2,5})$" defined in contract',
-            r'Configuration property "user.password" with value "passw0rd123!" does not match regex "^[a-zA-Z0-9]+$" defined in contract'
+            r'Configuration property [bold white]"user.email"[/bold white] with value "toto.test" does not match regex [bold green]"^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+).([a-zA-Z]{2,5})$"[/bold green] defined in contract',
+            r'Configuration property [bold white]"user.password"[/bold white] with value "passw0rd123!" does not match regex [bold green]"^[a-zA-Z0-9]+$"[/bold green] defined in contract'
         ]
         self.__should_refuse_validation_for_configuration_with_local_values("complex_contract_file_with_regex.yml",
                                                                             "complex_local_values_wrong_regex.yml",
