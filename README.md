@@ -28,13 +28,21 @@
 
 The Symeo SDK made for interacting with your Symeo secrets and configuration from python applications.
 
-#  Installation
+## Table of Contents
 
-## Pip
+- [Install](#install)
+- [Usage](#usage)
+- [Symeo CLI options](#symeo-cli-options)
+- [Help](#help)
+
+## Install
+
+### Pip
 
 Add `symeo-python` to your `requirements.txt`
 
 Ex :
+
 ```t
 symeo-python==0.0.1
 ```
@@ -43,12 +51,12 @@ Run `pip install -r requirements.txt`
 
 Or run directly `pip install symeo-python`
 
-## Pipenv
-
+### Pipenv
 
 Add `symeo-python` to your `Pipfile`
 
 Ex :
+
 ```
 [packages]
 symeo-python = "0.0.1"
@@ -56,11 +64,12 @@ symeo-python = "0.0.1"
 
 Run `pipenv install`
 
-# Usage
+## Usage
 
-## Define configuration contract
+### Define configuration contract
 
-Create a `symeo.config.yml` file in the root of your project, and define the structure and types of your application configuration:
+Create a `symeo.config.yml` file in the root of your project, and define the structure and types of your application
+configuration:
 
 ```yaml
 aws:
@@ -75,18 +84,22 @@ aws:
       type: string
     password:
       type: string
+      secret: true
+      regex: ^[a-zA-Z0-9]+$
 ```
 
 - You can nest properties to any depth level
-- Supported types are string and integer
+- Supported types are `boolean`, `string`, `integer` and `float`
+- Properties can be flagged with `optional: true`, or `secret: true`
+- For type `string`, you can add a regex expression that the value will have to match
 
-## Build Config class from the contract
+### Build your configuration to access it in your code
 
 Generate the `Config` class corresponding to your contract using the following command :
 
 `symeo-python build`
 
-## Use your configuration anywhere in your code
+### Use your configuration anywhere in your code
 
 Your configuration is then accessible with the import:
 
@@ -113,8 +126,6 @@ class DatabaseClient:
         )
 ```
 
-## Wrap your application startup with the symeo command
-
 ### Create your local configuration file
 
 Create a `symeo.local.yml` file in the root of your project, defining the values matching your configuration contract:
@@ -128,15 +139,20 @@ aws:
     username: postgres
     password: XPJc5qAbQcn77GWg
 ```
+
 **Hint** : your can add your `symeo.local.yml` into your `.gitignore`
 
-### Local run
+### Wrap your application startup with the symeo command
 
-To run locally your application using the configuration values file `symeo.local.yml`, you have to wrap your command to start your application with the `symeo-python` cli :
+#### Local run
+
+To run locally your application using the configuration values file `symeo.local.yml`, you have to wrap your command to
+start your application with the `symeo-python` cli :
 
 `symeo-python start -- $your_command_to_start_your_application`
 
 1. Example 1 with `uvicorn`
+
 ```shell
 symeo-python start -- uvicorn main:app
 ```
@@ -147,7 +163,7 @@ symeo-python start -- uvicorn main:app
 symeo-python start -- python main.py
 ```
 
-### Custom values file
+#### Custom values file
 
 You can specify the path and name of the local file with the `-f` flag:
 
@@ -169,32 +185,56 @@ Follow the [Symeo platform documentation](https://symeo.io/) for more details.
 
 ## Symeo CLI options
 
-### Options for the `build` command
+### symeo-python build
 
-`-c, --contract-file`
+Build your python type classes from your contract file.
 
-The path to your configuration contract file. Default is `symeo.config.yml`.
-
-### Options for the `start` command
-
-`-c, --contract-file`
+`-c, --config-contract`
 
 The path to your configuration contract file. Default is `symeo.config.yml`.
 
-`-f, --values-file`
+### symeo-python start
+
+Start your application with your configuration values, either read from a local file or fetched from the Symeo platform.
+
+`-c, --config-contract`
+
+The path to your configuration contract file. Default is `symeo.config.yml`.
+
+`-f, --config-values`
 
 The path to your local values file. Default is `symeo.local.yml`.
 
 `-k, --api-key`
 
-The environment api key to use to fetch values from Symeo platform. If empty, values will be fetched from local value file (`symeo.local.yml` by default). If specified, parameter `-f, --values-file` is ignored.
+The environment api key to use to fetch values from Symeo platform. If empty, values will be fetched from local value
+file (`symeo.local.yml` by default). If specified, parameter `-f, --config-values` is ignored.
 
 `-a, --api-url`
 
 The api endpoint used to fetch your configuration with the api key. Default is `https://api.symeo.io/api/v1/values`.
 
+### symeo-python validate
 
-# Help
+Check that with your configuration values, either read from a local file or fetched from the Symeo platform, match your contract.
+
+`-c, --config-contract`
+
+The path to your configuration contract file. Default is `symeo.config.yml`.
+
+`-f, --config-values`
+
+The path to your local values file. Default is `symeo.local.yml`.
+
+#### `-k, --api-key`
+
+The environment api key to use to fetch values from Symeo platform. If empty, values will be fetched from local value file (`symeo.local.yml` by default). If specified, parameter `-f, --config-values` is ignored.
+
+#### `-a, --api-url`
+
+The api endpoint used to fetch your configuration with the api key. Default is `https://api.symeo.io/api/v1/values`.
+
+## Help
 
 To get some help with the CLI, please use the following commands :
 
