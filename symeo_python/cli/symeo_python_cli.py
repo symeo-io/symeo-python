@@ -35,7 +35,7 @@ class SymeoPythonCli:
         @cli.command()
         def build(
                 config_contract: str = Option(
-                    DEFAULT_CONFIG_CONTRACT_PATH, "--config-contract", "-c"
+                    DEFAULT_CONFIG_CONTRACT_PATH, "--contract-file", "-c"
                 )
         ):
             generate_config(config_contract)
@@ -45,10 +45,10 @@ class SymeoPythonCli:
                 api_key: str = Option("", "--api-key", "-k"),
                 api_url: str = Option(DEFAULT_SYMEO_API_URL, "--api-url", "-a"),
                 config_values: str = Option(
-                    DEFAULT_CONFIG_VALUES_PATH, "--config-values", "-f"
+                    DEFAULT_CONFIG_VALUES_PATH, "--values-file", "-f"
                 ),
                 config_contract: str = Option(
-                    DEFAULT_CONFIG_CONTRACT_PATH, "--config-contract", "-c"
+                    DEFAULT_CONFIG_CONTRACT_PATH, "--contract-file", "-c"
                 ),
         ):
             generate_config(config_contract)
@@ -67,10 +67,10 @@ class SymeoPythonCli:
                 api_key: str = Option("", "--api-key", "-k"),
                 api_url: str = Option(DEFAULT_SYMEO_API_URL, "--api-url", "-a"),
                 config_values: str = Option(
-                    DEFAULT_CONFIG_VALUES_PATH, "--config-values", "-f"
+                    DEFAULT_CONFIG_VALUES_PATH, "--values-file", "-f"
                 ),
                 config_contract: str = Option(
-                    DEFAULT_CONFIG_CONTRACT_PATH, "--config-contract", "-c"
+                    DEFAULT_CONFIG_CONTRACT_PATH, "--contract-file", "-c"
                 ),
         ):
             generate_config(config_contract)

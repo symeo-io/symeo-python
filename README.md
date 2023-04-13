@@ -189,7 +189,7 @@ Follow the [Symeo platform documentation](https://symeo.io/) for more details.
 
 Build your python type classes from your contract file.
 
-`-c, --config-contract`
+`-c, --contract-file`
 
 The path to your configuration contract file. Default is `symeo.config.yml`.
 
@@ -197,18 +197,18 @@ The path to your configuration contract file. Default is `symeo.config.yml`.
 
 Start your application with your configuration values, either read from a local file or fetched from the Symeo platform.
 
-`-c, --config-contract`
+`-c, --contract-file`
 
 The path to your configuration contract file. Default is `symeo.config.yml`.
 
-`-f, --config-values`
+`-f, --values-file`
 
 The path to your local values file. Default is `symeo.local.yml`.
 
 `-k, --api-key`
 
 The environment api key to use to fetch values from Symeo platform. If empty, values will be fetched from local value
-file (`symeo.local.yml` by default). If specified, parameter `-f, --config-values` is ignored.
+file (`symeo.local.yml` by default). If specified, parameter `-f, --values-file` is ignored.
 
 `-a, --api-url`
 
@@ -218,17 +218,17 @@ The api endpoint used to fetch your configuration with the api key. Default is `
 
 Check that with your configuration values, either read from a local file or fetched from the Symeo platform, match your contract.
 
-`-c, --config-contract`
+`-c, --contract-file`
 
 The path to your configuration contract file. Default is `symeo.config.yml`.
 
-`-f, --config-values`
+`-f, --values-file`
 
 The path to your local values file. Default is `symeo.local.yml`.
 
 #### `-k, --api-key`
 
-The environment api key to use to fetch values from Symeo platform. If empty, values will be fetched from local value file (`symeo.local.yml` by default). If specified, parameter `-f, --config-values` is ignored.
+The environment api key to use to fetch values from Symeo platform. If empty, values will be fetched from local value file (`symeo.local.yml` by default). If specified, parameter `-f, --values-file` is ignored.
 
 #### `-a, --api-url`
 
