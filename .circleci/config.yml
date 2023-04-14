@@ -43,7 +43,7 @@ jobs:
   #          name: Build Sphinx html documentation
   #          command: sphinx-build -b html docs/source/ docs/build/html
 
-  validate-configuration:
+  validate_configuration_production:
     executor: python/default
     working_directory: ~/symeo-python
     steps:
@@ -52,7 +52,7 @@ jobs:
           key: dependency-cache-{{ checksum "~/symeo-python/requirements-dev.lock" }}
     - run:
         name: Install symeo-cli
-        command: curl https://raw.githubusercontent.com/symeo-io/symeo-cli/main/scripts/install.sh | bash
+        command: sudo curl https://raw.githubusercontent.com/symeo-io/symeo-cli/main/scripts/install.sh | bash
     - run:
         name: Validate
         command: symeo-cli validate --api-key $SYMEO_API_KEY
@@ -67,7 +67,8 @@ jobs:
           key: dependency-cache-{{ checksum "~/symeo-python/requirements-dev.lock" }}
       - run:
           name: Install symeo-cli
-          command: curl https://raw.githubusercontent.com/symeo-io/symeo-cli/main/scripts/install.sh | bash
+          command: sudo curl https://raw.githubusercontent.com/symeo-io/symeo-cli/main/scripts/install.sh |
+          
       - run:
           name: Release version
           command: |
@@ -79,8 +80,8 @@ workflows:
     jobs:
       - build_and_test:
           name: build_and_test
-      - validate-configuration:
-          name: validate-configuration-production
+      - validate_configuration:
+          name: validate_configuration_production
           requires:
             - build_and_test
           context:
