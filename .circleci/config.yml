@@ -5,6 +5,7 @@ orbs:
 jobs:
   build_and_test:
     executor: python/default
+    working_directory: ~/symeo-python
     steps:
       - checkout
       - restore_cache:
