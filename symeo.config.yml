@@ -1,0 +1,6 @@
+pypi:
+  username:
+    type: string
+  password:
+    type: string
+    secret: true
