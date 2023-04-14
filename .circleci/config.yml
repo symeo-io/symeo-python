@@ -47,15 +47,15 @@ jobs:
     executor: python/default
     working_directory: ~/symeo-python
     steps:
-    - checkout
-    - restore_cache:
-          key: dependency-cache-{{ checksum "~/symeo-python/requirements-dev.lock" }}
-    - run:
-        name: Install symeo-cli
-        command: sudo curl https://raw.githubusercontent.com/symeo-io/symeo-cli/main/scripts/install.sh | bash
-    - run:
-        name: Validate
-        command: symeo-cli validate --api-key $SYMEO_API_KEY
+      - checkout
+      - restore_cache:
+            key: dependency-cache-{{ checksum "~/symeo-python/requirements-dev.lock" }}
+      - run:
+          name: Install symeo-cli
+          command: sudo curl https://raw.githubusercontent.com/symeo-io/symeo-cli/main/scripts/install.sh | bash
+      - run:
+          name: Validate
+          command: symeo-cli validate --api-key $SYMEO_API_KEY
 
   release:
     executor: python/default
@@ -67,8 +67,7 @@ jobs:
           key: dependency-cache-{{ checksum "~/symeo-python/requirements-dev.lock" }}
       - run:
           name: Install symeo-cli
-          command: sudo curl https://raw.githubusercontent.com/symeo-io/symeo-cli/main/scripts/install.sh |
-          
+          command: sudo curl https://raw.githubusercontent.com/symeo-io/symeo-cli/main/scripts/install.sh | bash
       - run:
           name: Release version
           command: |
@@ -94,6 +93,7 @@ workflows:
           name: release
           requires:
             - build_and_test
+            - validate_configuration_production
           context:
             - symeo-python
           filters:
