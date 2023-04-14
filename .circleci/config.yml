@@ -51,10 +51,13 @@ jobs:
       - restore_cache:
           key: dependency-cache-{{ checksum "~/symeo-python/requirement-dev.lock" }}
       - run:
+          name: Install symeo-cli
+          command: sudo curl https://raw.githubusercontent.com/symeo-io/symeo-cli/main/scripts/install.sh
+      - run:
           name: Release version
           command: |
             version=$(echo $CIRCLE_TAG | cut -d '-' -f2)
-            twine upload dist/symeo-python-$version.tar.gz dist/symeo_python-$version-py3-none-any.whl -u $PYPI_USERNAME -p $PYPI_PASSWORD
+            symeo-cli start --api-key $SYMEO_API_KEY -- twine upload dist/symeo-python-$version.tar.gz dist/symeo_python-$version-py3-none-any.whl -u $PYPI_USERNAME -p $PYPI_PASSWORD
 
 workflows:
   build_test_release:
