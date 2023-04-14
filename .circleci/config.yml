@@ -22,8 +22,30 @@ jobs:
       - run:
           name: Build Sphinx html documentation
           command: sphinx-build -b html docs/source/ docs/build/html
+  release:
+    executor: python/default
+    steps:
+      - checkout
+      - run:
+          name: Build release
+          command: python -m build
+      - run:
+          name: Release version
+          command: |
+            version=$(echo $CIRCLE_TAG | cut -d '-' -f2)
+            twine upload dist/symeo-python-$version.tar.gz dist/symeo_python-$version-py3-none-any.whl -u $PYPI_USERNAME -p $PYPI_PASSWORD
 
 workflows:
-  build_test:
+  build_test_release:
     jobs:
-      - build_and_test
+      - build_and_test:
+          name: build_and_test
+      - release:
+          name: release
+          requires:
+            - build_and_test
+          filters:
+            branches:
+              only: main
+            tags:
+              only: /^release-[0-9]+(\.[0-9]+)+$/
