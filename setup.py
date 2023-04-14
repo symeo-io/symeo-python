@@ -2,7 +2,7 @@ from setuptools import find_packages, setup  # type: ignore
 
 setup(
     name="symeo-python",
-    version="0.0.5",
+    version="0.0.4",
     packages=find_packages(exclude=["test"]),
     install_requires=["pyyaml", "typer[all]", "requests"],
     license="Apache-2.0 license",

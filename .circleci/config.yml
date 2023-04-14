@@ -101,4 +101,4 @@ workflows:
             branches:
               ignore: /.*/
             tags:
-              only: /^release-[0-9]+(\.[0-9]+)+$/
+              only: /^release-[0-9]+\.{1}[0-9]+\.{1}[0-9]+$/
