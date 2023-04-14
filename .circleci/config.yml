@@ -80,6 +80,11 @@ workflows:
     jobs:
       - build_and_test:
           name: build_and_test
+          filters:
+            branches:
+              only: /.*/
+            tags:
+              only: /^release-[0-9]+\.{1}[0-9]+\.{1}[0-9]+$/
       - validate_configuration:
           name: validate_configuration_production
           requires:
@@ -88,8 +93,9 @@ workflows:
             - symeo-python
           filters:
             branches:
-              only:
-                - main
+              only: main
+            tags:
+              only: /^release-[0-9]+\.{1}[0-9]+\.{1}[0-9]+$/
       - release:
           name: release
           requires:
