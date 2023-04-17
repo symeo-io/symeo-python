@@ -78,7 +78,7 @@ jobs:
       - restore_cache:
           key: build-cache-{{ checksum "~/symeo-python/setup.py" }}
       - restore_cache:
-          key: dependency-cache-{{ checksum "~/symeo-python/requirements.txt" }}-{{ checksum "~/symeo-python/requirements-dev.txt" }}
+          key: dependency-cache-{{ checksum "~/symeo-python/requirements-dev.txt" }}
       - run:
           name: Install symeo-cli
           command: curl https://raw.githubusercontent.com/symeo-io/symeo-cli/main/scripts/install.sh | sudo bash
@@ -87,7 +87,7 @@ jobs:
           command: |
             source venv/bin/activate
             version=$(echo $CIRCLE_TAG | cut -d '-' -f2)
-            symeo-cli start --api-key $SYMEO_API_KEY -- twine upload dist/symeo-python-$version.tar.gz dist/symeo_python-$version-py3-none-any.whl -u $PYPI_USERNAME -p $PYPI_PASSWORD
+            symeo-cli start --api-key $SYMEO_API_KEY -- sh scripts/deploy.sh
 
 workflows:
   build_test_release:
