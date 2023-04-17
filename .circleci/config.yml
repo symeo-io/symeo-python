@@ -26,7 +26,6 @@ jobs:
       - run:
           name: Install dev requirements in venv directory
           command: |
-            python -m venv ./venv
             source venv/bin/activate
             pip install --upgrade pip
             pip install -r requirements-dev.txt
@@ -36,13 +35,19 @@ jobs:
             - venv
       - run:
           name: Run test with coverage
-          command: coverage run -m pytest test
+          command: |
+            source venv/bin/activate
+            coverage run -m pytest test
       - run:
           name: Display coverage
-          command: coverage report
+          command: |
+            source venv/bin/activate
+            coverage report
       - run:
           name: Build
-          command: python -m build
+          command: |
+            source venv/bin/activate
+            python -m build
       - save_cache:
           key: build-cache-{{ checksum "~/symeo-python/setup.py" }}
           paths:
@@ -63,7 +68,9 @@ jobs:
           command: curl https://raw.githubusercontent.com/symeo-io/symeo-cli/main/scripts/install.sh | sudo bash
       - run:
           name: Validate
-          command: symeo-cli validate --api-key $SYMEO_API_KEY
+          command: |
+            source venv/bin/activate
+            symeo-cli validate --api-key $SYMEO_API_KEY
 
   release:
     executor: python/default
@@ -80,6 +87,7 @@ jobs:
       - run:
           name: Release version
           command: |
+            source venv/bin/activate
             version=$(echo $CIRCLE_TAG | cut -d '-' -f2)
             symeo-cli start --api-key $SYMEO_API_KEY -- twine upload dist/symeo-python-$version.tar.gz dist/symeo_python-$version-py3-none-any.whl -u $PYPI_USERNAME -p $PYPI_PASSWORD
 
