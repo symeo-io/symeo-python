@@ -49,7 +49,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-            key: dependency-cache-{{ checksum "~/symeo-python/requirements-dev.lock" }}
+            key: dependency-cache-{{ checksum "~/symeo-python/requirements-dev.txt" }}
       - run:
           name: Install symeo-cli
           command: curl https://raw.githubusercontent.com/symeo-io/symeo-cli/main/scripts/install.sh | sudo bash
@@ -63,9 +63,9 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: dependency-cache-{{ checksum "~/symeo-python/build.lock" }}
+          key: dependency-cache-{{ checksum "~/symeo-python/setup.py" }}
       - restore_cache:
-          key: dependency-cache-{{ checksum "~/symeo-python/requirements-dev.lock" }}
+          key: dependency-cache-{{ checksum "~/symeo-python/requirements-dev.txt" }}
       - run:
           name: Install symeo-cli
           command: curl https://raw.githubusercontent.com/symeo-io/symeo-cli/main/scripts/install.sh | sudo bash
