@@ -16,7 +16,7 @@ jobs:
           name: Install requirements in venv directory
           command: | 
             python -m venv venv
-            . venv/bin/activate
+            source venv/bin/activate
             pip install --upgrade pip
             pip install -r requirements.txt
       - save_cache:
@@ -26,7 +26,7 @@ jobs:
       - run:
           name: Install dev requirements in venv directory
           command: |
-            . venv/bin/activate
+            source venv/bin/activate
             pip install -r requirements-dev.txt
       - save_cache:
           key: dependency-cache-{{ checksum "~/symeo-python/requirements-dev.txt" }}
@@ -45,7 +45,7 @@ jobs:
       - run:
           name: Build
           command: |
-            . venv/bin/activate
+            source venv/bin/activate
             python -m build
       - save_cache:
           key: build-cache-{{ checksum "~/symeo-python/setup.py" }}
@@ -63,12 +63,17 @@ jobs:
       - restore_cache:
             key: dependency-cache-{{ checksum "~/symeo-python/requirements-dev.txt" }}
       - run:
+          name: Install dev requirements in venv directory
+          command: |
+            source venv/bin/activate
+            pip install -r requirements-dev.txt
+      - run:
           name: Install symeo-cli
           command: curl https://raw.githubusercontent.com/symeo-io/symeo-cli/main/scripts/install.sh | sudo bash
       - run:
           name: Validate
           command: |
-            . venv/bin/activate
+            source venv/bin/activate
             symeo-cli validate --api-key $SYMEO_API_KEY
 
   release:
@@ -77,7 +82,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: dependency-cache-{{ checksum "~/symeo-python/setup.py" }}
+          key: build-cache-{{ checksum "~/symeo-python/setup.py" }}
       - restore_cache:
           key: dependency-cache-{{ checksum "~/symeo-python/requirements-dev.txt" }}
       - run:
@@ -86,7 +91,7 @@ jobs:
       - run:
           name: Release version
           command: |
-            . venv/bin/activate
+            source venv/bin/activate
             version=$(echo $CIRCLE_TAG | cut -d '-' -f2)
             symeo-cli start --api-key $SYMEO_API_KEY -- twine upload dist/symeo-python-$version.tar.gz dist/symeo_python-$version-py3-none-any.whl -u $PYPI_USERNAME -p $PYPI_PASSWORD
 
