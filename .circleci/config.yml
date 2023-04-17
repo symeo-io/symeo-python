@@ -15,24 +15,23 @@ jobs:
       - run:
           name: Install requirements in venv directory
           command: | 
-            python -m venv ./venv
-            source venv/bin/activate
+            python -m venv venv
+            . venv/bin/activate
             pip install --upgrade pip
             pip install -r requirements.txt
       - save_cache:
           key: dependency-cache-{{ checksum "~/symeo-python/requirements.txt" }}
           paths:
-            - venv
+            - "venv"
       - run:
           name: Install dev requirements in venv directory
           command: |
-            source venv/bin/activate
-            pip install --upgrade pip
+            . venv/bin/activate
             pip install -r requirements-dev.txt
       - save_cache:
           key: dependency-cache-{{ checksum "~/symeo-python/requirements-dev.txt" }}
           paths:
-            - venv
+            - "venv"
       - run:
           name: Run test with coverage
           command: |
@@ -46,12 +45,12 @@ jobs:
       - run:
           name: Build
           command: |
-            source venv/bin/activate
+            . venv/bin/activate
             python -m build
       - save_cache:
           key: build-cache-{{ checksum "~/symeo-python/setup.py" }}
           paths:
-            - dist
+            - "dist"
   #      - run:
   #          name: Build Sphinx html documentation
   #          command: sphinx-build -b html docs/source/ docs/build/html
@@ -69,7 +68,7 @@ jobs:
       - run:
           name: Validate
           command: |
-            source venv/bin/activate
+            . venv/bin/activate
             symeo-cli validate --api-key $SYMEO_API_KEY
 
   release:
@@ -87,7 +86,7 @@ jobs:
       - run:
           name: Release version
           command: |
-            source venv/bin/activate
+            . venv/bin/activate
             version=$(echo $CIRCLE_TAG | cut -d '-' -f2)
             symeo-cli start --api-key $SYMEO_API_KEY -- twine upload dist/symeo-python-$version.tar.gz dist/symeo_python-$version-py3-none-any.whl -u $PYPI_USERNAME -p $PYPI_PASSWORD
 
