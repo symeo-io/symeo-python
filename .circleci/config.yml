@@ -86,8 +86,7 @@ jobs:
           name: Release version
           command: |
             source venv/bin/activate
-            version=$(echo $CIRCLE_TAG | cut -d '-' -f2)
-            symeo-cli start --api-key $SYMEO_API_KEY -- sh scripts/deploy.sh
+            symeo-cli start --api-key $SYMEO_API_KEY -- sh scripts/release.sh
 
 workflows:
   build_test_release:
