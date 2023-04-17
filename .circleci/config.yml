@@ -13,15 +13,23 @@ jobs:
       - restore_cache:
           key: dependency-cache-{{ checksum "~/symeo-python/requirements-dev.txt" }}
       - run:
-          name: Install requirements
-          command: pip install -r requirements.txt
+          name: Install requirements in venv directory
+          command: | 
+            python -m venv ./venv
+            source venv/bin/activate
+            pip install --upgrade pip
+            pip install -r requirements.txt
       - save_cache:
           key: dependency-cache-{{ checksum "~/symeo-python/requirements.txt" }}
           paths:
             - venv
       - run:
-          name: Install dev requirements
-          command: pip install -r requirements-dev.txt
+          name: Install dev requirements in venv directory
+          command: |
+            python -m venv ./venv
+            source venv/bin/activate
+            pip install --upgrade pip
+            pip install -r requirements-dev.txt
       - save_cache:
           key: dependency-cache-{{ checksum "~/symeo-python/requirements-dev.txt" }}
           paths:
