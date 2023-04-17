@@ -9,23 +9,23 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: dependency-cache-{{ checksum "~/symeo-python/requirements.lock" }}
+          key: dependency-cache-{{ checksum "~/symeo-python/requirements.txt" }}
       - restore_cache:
-          key: dependency-cache-{{ checksum "~/symeo-python/requirements-dev.lock" }}
+          key: dependency-cache-{{ checksum "~/symeo-python/requirements-dev.txt" }}
       - run:
           name: Install requirements
           command: pip install -r requirements.txt
       - save_cache:
-          key: dependency-cache-{{ checksum "~/symeo-python/requirements.lock" }}
+          key: dependency-cache-{{ checksum "~/symeo-python/requirements.txt" }}
           paths:
-            - /venv
+            - venv
       - run:
           name: Install dev requirements
           command: pip install -r requirements-dev.txt
       - save_cache:
-          key: dependency-cache-{{ checksum "~/symeo-python/requirements-dev.lock" }}
+          key: dependency-cache-{{ checksum "~/symeo-python/requirements-dev.txt" }}
           paths:
-            - /venv
+            - venv
       - run:
           name: Run test with coverage
           command: coverage run -m pytest test
@@ -36,9 +36,9 @@ jobs:
           name: Build
           command: python -m build
       - save_cache:
-          key: build-cache-{{ checksum "~/symeo-python/build.lock" }}
+          key: build-cache-{{ checksum "~/symeo-python/setup.py" }}
           paths:
-            - /dist
+            - dist
   #      - run:
   #          name: Build Sphinx html documentation
   #          command: sphinx-build -b html docs/source/ docs/build/html
@@ -66,9 +66,9 @@ jobs:
           key: dependency-cache-{{ checksum "~/symeo-python/build.lock" }}
       - restore_cache:
           key: dependency-cache-{{ checksum "~/symeo-python/requirements-dev.lock" }}
-#      - run:
-#          name: Install symeo-cli
-#          command: curl https://raw.githubusercontent.com/symeo-io/symeo-cli/main/scripts/install.sh | sudo bash
+      - run:
+          name: Install symeo-cli
+          command: curl https://raw.githubusercontent.com/symeo-io/symeo-cli/main/scripts/install.sh | sudo bash
       - run:
           name: Release version
           command: |
